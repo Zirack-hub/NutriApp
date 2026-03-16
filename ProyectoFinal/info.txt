@@ -1,0 +1,2 @@
+Aqui se creara el proyecto laravel pero este txt es para que se suba la carpeta.
+un dia de estos la hacemos la demo la haremos en php raw para ir mas rapido
