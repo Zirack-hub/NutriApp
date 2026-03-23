@@ -201,8 +201,34 @@ function createUser(PDO $conn, string $nombre, string $email, string $password, 
 
     // 4️⃣ Crear tabla propia del usuario
     $sqlTabla = "CREATE TABLE `$tabla` (
-        ID INT AUTO_INCREMENT PRIMARY KEY,
-        `$columna` VARCHAR(255)
+        id INT AUTO_INCREMENT PRIMARY KEY,
+
+        na_100 DECIMAL(10,2),
+        ca_100 DECIMAL(10,2),
+        k_100 DECIMAL(10,2),
+
+        energia_kcal DECIMAL(10,2),
+        proteinas_g DECIMAL(10,2),
+        grasas_g DECIMAL(10,2),
+
+        ags_g DECIMAL(10,2),
+        agm_g DECIMAL(10,2),
+        agp_g DECIMAL(10,2),
+
+        colesterol_mg DECIMAL(10,2),
+        hc_g DECIMAL(10,2),
+        fibra_g DECIMAL(10,2),
+
+        vit_c_mg DECIMAL(10,2),
+        vit_b6_mg DECIMAL(10,2),
+        vit_e_mg DECIMAL(10,2),
+
+        hierro_mg DECIMAL(10,2),
+        sodio_mg DECIMAL(10,2),
+        calcio_mg DECIMAL(10,2),
+        potasio_mg DECIMAL(10,2),
+
+        porcentaje_energia_total DECIMAL(5,2)
     )";
     $conn->exec($sqlTabla);
 

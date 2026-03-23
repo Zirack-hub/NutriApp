@@ -50,8 +50,7 @@ Tipo<br>
     <?php endforeach; ?>
 </select><br><br>
 
-Columna a crear<br>
-<input type="text" name="columna" placeholder="Nombre de la columna" required><br><br>
+
 
 <input type="submit" name="crear" value="Crear usuario">
 </form>
