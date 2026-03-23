@@ -56,135 +56,21 @@ function cerrarSesion($cookie_name){
 
 
 
-function agregarProducto($id, $cantidad) {
-
-    $cantidad = (int) $cantidad;
-
-    if ($cantidad <= 0) {
-        echo '<span style="color:red;">Introduce un número</span>';
-        return;
-    }
-
-    if (!isset($_SESSION['carrito'])) {
-        $_SESSION['carrito'] = [];
-    }
-
-    if (isset($_SESSION['carrito'][$id])) {
-        $_SESSION['carrito'][$id] += $cantidad;
-    } else {
-        $_SESSION['carrito'][$id] = $cantidad;
-    }
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
-}
-
-function eliminarProducto($id, $cantidad) {
-    $cantidad = (int) $cantidad;
-
-    if ($cantidad <= 0) {
-        echo '<span style="color:red;">Introduce un número válido</span>';
-        return;
-    }
-
-    if (!isset($_SESSION['carrito'])) {
-        $_SESSION['carrito'] = [];
-    }
-
-    if (isset($_SESSION['carrito'][$id])) {
-        // Restamos la cantidad
-        $_SESSION['carrito'][$id] -= $cantidad;
-
-        // Si llega a 0 o menos, eliminamos el producto
-        if ($_SESSION['carrito'][$id] <= 0) {
-            unset($_SESSION['carrito'][$id]);
-        }
-    }
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
-}
 
 
-function comprobarCarrito($conn){
-    $flag = true;
-    foreach ($_SESSION['carrito'] as $producto => $cantidad){
-        $cotejar =  selectCol("SELECT QUANTITYINSTOCK FROM PRODUCTS WHERE PRODUCTCODE = '$producto'", $conn);
-        if ($cantidad > $cotejar){
-            $nombre = selectCol("SELECT PRODUCTNAME FROM PRODUCTS WHERE PRODUCTCODE = '$producto'", $conn);
-            echo ("La cantidad seleccionada del articulo $nombre no existe");
-            $flag = false;
-        }
-    }
-    return $flag;
-}
 
 
-function realizarCompra($conn, $pago){
-    $fecha = date("Y-m-d H:i:s");
-    $numero = selectCol("SELECT ORDERNUMBER FROM ORDERS ORDER BY ORDERNUMBER DESC LIMIT 1", $conn);
-    $numero += 1;
-    $status = "Unshipped";
-    $total = 0;
-    $orderlinenumber = 1;
-    
-    try{
-        $conn->beginTransaction();
-        $stmt = $conn->prepare("INSERT INTO ORDERS(ORDERNUMBER, ORDERDATE, REQUIREDDATE, SHIPPEDDATE, `STATUS`, COMMENTS, CUSTOMERNUMBER) VALUES (:ORDERNUMBER,:ORDERDATE,:REQUIREDDATE,NULL,:STATUS,NULL,:CUSTOMERNUMBER)");
-        $stmt->bindParam(':ORDERNUMBER', $numero);
-        $stmt->bindParam(':ORDERDATE', $fecha);
-        $stmt->bindParam(':REQUIREDDATE', $fecha);
-        $stmt->bindParam(':STATUS', $status);
-        $stmt->bindParam(':CUSTOMERNUMBER', $_COOKIE['usuariopedidos']);
-        $stmt->execute();
-    
-    
-    foreach ($_SESSION['carrito'] as $producto => $cantidad){
-        $precio = selectCOL("SELECT BUYPRICE FROM PRODUCTS WHERE PRODUCTCODE = '$producto'",$conn);
-        $precioTotal = $precio * $cantidad;
-        $total += $precioTotal;
 
-            $stmt = $conn->prepare("UPDATE PRODUCTS SET QUANTITYINSTOCK = QUANTITYINSTOCK - :cantidad WHERE PRODUCTCODE = :producto");
-            $stmt->bindParam(':producto', $producto);
-            $stmt->bindParam(':cantidad', $cantidad);
-            $stmt->execute();
-       
 
-            $stmt = $conn->prepare("INSERT INTO ORDERDETAILS(ORDERNUMBER, PRODUCTCODE, QUANTITYORDERED, PRICEEACH, ORDERLINENUMBER) VALUES (:ORDERNUMBER,:PRODUCTCODE,:QUANTITYORDERED,:PRICEEACH, :ORDERLINENUMBER)");
-            $stmt->bindParam(':ORDERNUMBER', $numero);
-            $stmt->bindParam(':PRODUCTCODE', $producto);
-            $stmt->bindParam(':QUANTITYORDERED', $cantidad);
-            $stmt->bindParam(':PRICEEACH', $precio);
-            $stmt->bindParam(':ORDERLINENUMBER', $orderlinenumber);
-            $stmt->execute();
-            $orderlinenumber +=1;
-    }
 
-        $stmt = $conn->prepare("INSERT INTO PAYMENTS(CUSTOMERNUMBER, CHECKNUMBER, PAYMENTDATE, AMOUNT) VALUES (:CUSTOMERNUMBER,:CHECKNUMBER,:PAYMENTDATE,:AMOUNT)");
-        $stmt->bindParam(':CUSTOMERNUMBER', $_COOKIE['usuariopedidos']);
-        $stmt->bindParam(':CHECKNUMBER', $pago);
-        $stmt->bindParam(':PAYMENTDATE', $fecha);
-        $stmt->bindParam(':AMOUNT', $total);
-        $stmt->execute();
-        $conn->commit(); 
-        if (isset($_COOKIE['carrito' . $_COOKIE['usuariopedidos']])) {
-               setcookie('carrito' . $_COOKIE['usuariopedidos'], "", time() - 3600, "/");
-            }
-    }
-    catch(PDOException $e){
-        if ($conn && $conn->inTransaction()) {
-            $conn->rollback();
-        }
-        echo "Connection failed: " . $e->getMessage();
-        echo "C贸digo de error: " . $e->getCode() . "<br>";
-    }
-}
+
 
 function createUser(PDO $conn, string $nombre, string $email, string $password, int $tipo): array {
     // 1️⃣ Calcular ID y tabla
     $id = getNextUserId($conn);
     $tabla = generateUserTableName($id);
 
-    // 2️⃣ Hashear contraseña
-    $passHash = password_hash($password, PASSWORD_DEFAULT);
+    $passHash = $password;
 
     // 3️⃣ Insertar en USUARIOS
     $sql = "INSERT INTO USUARIOS (ID, email, NOMBRE, CONTRASENA, TIPO, TABLA) 
@@ -202,7 +88,7 @@ function createUser(PDO $conn, string $nombre, string $email, string $password, 
     // 4️⃣ Crear tabla propia del usuario
     $sqlTabla = "CREATE TABLE `$tabla` (
         id INT AUTO_INCREMENT PRIMARY KEY,
-
+        alimento VARCHAR(25),
         na_100 DECIMAL(10,2),
         ca_100 DECIMAL(10,2),
         k_100 DECIMAL(10,2),
