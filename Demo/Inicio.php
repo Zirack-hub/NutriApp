@@ -1,10 +1,20 @@
 <?php
+/*
+    CREAR COOKIE DE USUARIO
+    Y HACER LA COMPROBACION DE LA BASE DE DATOS Y NO LA QUE HAY AHORA PUESTA EMAIL CONTRASEÑA BIEN PUESTOS
+    MOSTRAR ENLACES A BBDD.PHP
+    SI ERES ADMIN O PROFESOR TAMBIEN A USUARIOS.PHP
+    YA ESTA.
+*/
+
+
+
     require_once ("./funciones/funciones.php");
     require_once ("./funciones/fbd.php");
     require_once ("./funciones/fcompras.php");
     $conn = openBD();
 
-    $cookie_name = "usuariopedidos";
+    $cookie_name = "usuarioNutricion";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST"
     && isset($_POST["submit"])

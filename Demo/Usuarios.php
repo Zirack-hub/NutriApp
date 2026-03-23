@@ -71,7 +71,11 @@ Tipo<br>
     <td><?= htmlspecialchars($row["ID"]) ?></td>
     <td><?= htmlspecialchars($row["NOMBRE"]) ?></td>
     <td><?= htmlspecialchars($row["email"]) ?></td>
-    <td><?= htmlspecialchars($row["TABLA"]) ?></td>
+    <td>
+    <a href="bbdd.php?tabla=<?= urlencode($row["TABLA"]) ?>">
+        <?= htmlspecialchars($row["TABLA"]) ?>
+    </a>
+</td>
 </tr>
 <?php endforeach; ?>
 </table>
