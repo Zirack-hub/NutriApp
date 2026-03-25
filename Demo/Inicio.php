@@ -1,92 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Inicio</title>
+</head>
+<body>
+    <h1>Inicio</h1>
+		<div class="card-body">
+		<form name="alta" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+            <?php
+                $cookie_name = "usuarioNutricion";
+                require_once ("./funciones/funciones.php");
+                require_once ("./funciones/fbd.php");
+                require_once ("./funciones/fcompras.php");
+
+                $conn = openBD("nutriapp");
+
+                if(!isset($_COOKIE[$cookie_name])) {
+                    header("Location: ./login");
+                } 
+                else {
+                    $name = selectCol("SELECT NOMBRE FROM USUARIOS WHERE EMAIL = '$_COOKIE[$cookie_name]'",$conn);
+                    $tipo = selectCol("SELECT TIPO FROM USUARIOS WHERE EMAIL = '$_COOKIE[$cookie_name]'",$conn);
+                    echo "Has iniciado sesión como $name<br>";
+                    if ($tipo == 0 || $tipo == 1) {
+                        echo "USUARIOS: <br>";
+                        echo "<a href='./usuarios.php'> Ver usuarios</a><br>";
+                    }
+                    echo "BBDD: <br>";
+                    echo "<a href='./bbdd.php'> Ver bbdd</a><br>";
+                    echo "</br></br><input type='submit' name='logout' value='Cerrar Sesión'>";
+                }
+            ?>
+        </form>
+</body>
+</html>
 <?php
-/*
-    CREAR COOKIE DE USUARIO
-    Y HACER LA COMPROBACION DE LA BASE DE DATOS Y NO LA QUE HAY AHORA PUESTA EMAIL CONTRASEÑA BIEN PUESTOS
-    MOSTRAR ENLACES A BBDD.PHP
-    SI ERES ADMIN O PROFESOR TAMBIEN A USUARIOS.PHP
-    YA ESTA.
-*/
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-
-
-    require_once ("./funciones/funciones.php");
-    require_once ("./funciones/fbd.php");
-    require_once ("./funciones/fcompras.php");
-    $conn = openBD();
-
-    $cookie_name = "usuarioNutricion";
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST"
-    && isset($_POST["submit"])
-    && $_POST["submit"] == "Cerrar Sesión") {
-
-    cerrarSesion($cookie_name);
-}
- if(!isset($_COOKIE['usuarioNutricion'])) {
-        
-     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-         $eleccion = limpiar_campos($_POST["submit"]);
-         if ($eleccion == "Iniciar Sesión") {
-             $usuario = limpiar_campos($_POST["usuario"]);
-            $clave = limpiar_campos($_POST["clave"]);
-            
-            $registro = selectCOL("SELECT CUSTOMERNUMBER FROM CUSTOMERS WHERE CONTACTLASTNAME = '$clave' AND CUSTOMERNUMBER = '$usuario'",$conn);
-            
-            if ($registro != null) {
-                $name = selectCol("SELECT CUSTOMERNAME FROM CUSTOMERS WHERE CUSTOMERNUMBER = '$usuario'",$conn);
-                setcookie($cookie_name, $registro, time() + (86400 * 30), "/");
-                echo "Has iniciado sesión como $name <br>";
-                echo "COMPRAS: <br>";
-                echo "<a href='./pe_altaped.php'> Ver compras</a><br>";
-                echo "HISTORIAL: <br>";
-                echo "<a href='./pe_consped.php'> Ver historial</a><br>";
-                echo "STOCK: <br>";
-                echo "<a href='./pe_consprodstock.php'> Ver historial</a><br>";
-                echo "STOCK LINEAS PRODUCCION: <br>";
-                echo "<a href='./pe_constock.php'> Ver historial</a><br>";
-                echo "BUSQUEDA POR FECHAS: <br>";
-                echo "<a href='./pe_todprod.php'> Ver historial</a><br>";
-                echo "BUSQUEDA POR CLIENTES: <br>";
-                echo "<a href='./pe_todprod.php'> Ver historial</a><br>";
-                
-                echo '
-                <form name="alta" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">
-                <br><br>
-                <input type="submit" name="submit" value="Cerrar Sesión">
-                </form>';
-                
-                
-            }
-            else {
-                echo "El usuario y la contraseña no coinciden<br>";
-                echo "<a href='./pe_login.php'> Volver login</a><br>";
-            }
-        }
-        elseif ($eleccion == "Cerrar Sesión") {
-            cerrarSesion($cookie_name);
-        }
-     }
-    }else{
-        $id = (int)$_COOKIE['usuariopedidos'];
-        $name = selectCol("SELECT CUSTOMERNAME FROM CUSTOMERS WHERE CUSTOMERNUMBER =$id",$conn);
-                echo "Has iniciado sesión como $name <br>";
-                echo "COMPRAS: <br>";
-                echo "<a href='./pe_altaped.php'> Ver compras</a><br>";
-                echo "HISTORIAL: <br>";
-                echo "<a href='./pe_consped.php'> Ver historial</a><br>";
-                echo "STOCK: <br>";
-                echo "<a href='./pe_consprodstock.php'> Ver historial</a><br>";
-                echo "STOCK LINEAS PRODUCCION: <br>";
-                echo "<a href='./pe_constock.php'> Ver historial</a><br>";
-                echo "BUSQUEDA POR FECHAS: <br>";
-                echo "<a href='./pe_todprod.php'> Ver historial</a><br>";
-                echo "BUSQUEDA POR CLIENTES: <br>";
-                echo "<a href='./pe_todprod.php'> Ver historial</a><br>";
-                
-                echo '
-                <form name="alta" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">
-                <br><br>
-                <input type="submit" name="submit" value="Cerrar Sesión">
-                </form>';
+    if (isset($_POST['logout'])) {
+        setcookie($cookie_name, "", time() - 3600, "/");
+        header("Location: ./login");
+        exit;
     }
-    ?>
+}
+?>

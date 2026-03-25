@@ -7,18 +7,44 @@
     <title>Login cliente</title>
 </head>
 <body>
-    <h1>Login cliente</h1>
-		<p>Login clientes<p>
+    <h1>LOGIN</h1>
 		<div class="card-body">
-		<form name="alta" action="<?php echo htmlspecialchars('inicio.php'); ?>" method="post">
+		<form name="alta" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+            <?php
+                $cookie_name = "usuarioNutricion";
+                require_once("./funciones/funciones.php");
+                require_once("./funciones/fbd.php");
+                require_once("./funciones/fcompras.php");
 
+                $conn = openBD("nutriapp");
 
-                    Email: <input type="text" name="usuario">
-                    contraseña: <input type="text" name="clave">
+                if(!isset($_COOKIE[$cookie_name])) {
+                ?>
+                    Usuario: <input type="text" name="usuario">
+                    Contraseña: <input type="text" name="clave">
                     <input type="submit" name="submit" value="Iniciar Sesión">
-
+                <?php
+                } 
+                else {
+                    header("Location: ./inicio");
+                }
+            ?>
         </form>
-
-
 </body>
 </html>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $usuario = limpiar_campos($_POST["usuario"]);
+        $clave = limpiar_campos($_POST["clave"]);
+
+        $registro = selectCOL("SELECT EMAIL FROM USUARIOS WHERE CONTRASENA = '$clave' AND EMAIL = '$usuario'",$conn);
+            
+        if ($registro != null) {
+            setcookie($cookie_name, $registro, time() + (86400 * 30), "/");
+            header("Location: ./inicio");
+        }
+        else {
+            echo "El usuario y la contraseña no coinciden";
+        }
+}
+?>
