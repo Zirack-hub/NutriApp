@@ -63,6 +63,7 @@ INSERT INTO `alergenos` (`id`, `nombre`) VALUES
 DROP TABLE IF EXISTS `t-2`;
 CREATE TABLE IF NOT EXISTS `t-2` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `alimento` VARCHAR(25),
   `na_100` decimal(10,2) DEFAULT NULL,
   `ca_100` decimal(10,2) DEFAULT NULL,
   `k_100` decimal(10,2) DEFAULT NULL,
