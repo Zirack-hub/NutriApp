@@ -1,0 +1,115 @@
+/* Reset */
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; font-family:'Segoe UI', Tahoma, sans-serif; }
+
+body {
+    background-image: url('../imagenes/fondo_normal.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+.container { 
+    width:90%; 
+    max-width:1200px; 
+}
+
+.dashboard {
+    padding:40px;
+    border-radius:25px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.15);
+    border:1px solid rgba(255,255,255,0.2);
+    margin-bottom:40px;
+}
+
+.title { 
+    text-align:center; 
+    font-size:2em; 
+    color:#4e6b4e; 
+    margin-bottom:20px; 
+}
+
+.mensaje { 
+    text-align:center; 
+    color:#5a6f4c; 
+    margin-bottom:20px; 
+}
+
+.formulario-grande {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px 20px;
+    width: 100%;
+}
+
+.form-group-grande.alimento {
+    grid-column: 1 / -1;
+    text-align: center;
+}
+.form-group-grande.alimento label {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    display: block;
+}
+.form-group-grande.alimento .input-grande {
+    width: 50%;
+    margin: 0 auto;
+    font-size: 0.95em;
+    text-align: center;
+}
+
+.form-group-grande {
+    display: flex;
+    flex-direction: column;
+}
+.input-grande {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.2);
+    backdrop-filter: blur(6px);
+    width: 100%;
+    font-size: 0.95em;
+    transition: 0.2s;
+    text-align: center;
+}
+
+.input-grande:focus, .input-grande:hover {
+    border-color: #adff2f; 
+    outline: none;
+}
+
+.btn, .reset {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 12px;
+    font-size: 1em;
+    margin-top: 10px;
+}
+.btn {
+    border:none;
+    border-radius:14px;
+    font-weight:bold;
+    cursor:pointer;
+    color:white;
+    background: linear-gradient(135deg,#a8e063,#56ab2f);
+    transition:0.3s;
+    text-decoration:none;
+    display:inline-block;
+}
+.btn:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(120,200,80,0.4);
+}
+
+@media (max-width: 768px) {
+    .formulario-grande {
+        grid-template-columns: 1fr;
+    }
+    .form-group-grande.alimento .input-grande {
+        width: 80%;
+    }
+}

@@ -3,79 +3,99 @@ require_once("./funciones/funciones.php");
 require_once("./funciones/fbd.php");
 require_once("./funciones/fcompras.php");
 
-$conn = openBD(); // tu función PDO
+$conn = openBD();
 
-/* OBTENER TIPOS DE USUARIO PARA EL SELECT */
 $tiposStmt = $conn->query("SELECT id, nombre FROM tipos");
 $tipos = $tiposStmt->fetchAll(PDO::FETCH_ASSOC);
 
-/* CREAR USUARIO */
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["crear"])) {
     $nombre = limpiar_campos($_POST["nombre"]);
     $email = limpiar_campos($_POST["email"]);
     $pass = limpiar_campos($_POST["contrasena"]);
     $tipo = (int)$_POST["tipo"];
 
-    // Llamada a la función modularizada
     try {
         $res = createUser($conn, $nombre, $email, $pass, $tipo);
-        echo "Usuario creado correctamente con ID {$res['id']} y tabla {$res['tabla']}<br><br>";
+        echo "<p class='success'>Usuario creado correctamente con ID {$res['id']} y tabla {$res['tabla']}</p>";
     } catch (PDOException $e) {
-        echo "Error al crear el usuario: " . $e->getMessage();
+        echo "<p class='error'>Error al crear el usuario: " . $e->getMessage() . "</p>";
     }
 }
 
-/* LISTAR USUARIOS */
 $sql = "SELECT ID, NOMBRE, email, TABLA FROM USUARIOS ORDER BY ID ASC";
 $stmt = $conn->query($sql);
 $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<h2>Crear usuario</h2>
-<form method="POST">
-Nombre<br>
-<input type="text" name="nombre" required><br><br>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Usuarios</title>
+<link rel="stylesheet" href="css/usuarios.css">
+</head>
 
-Email<br>
-<input type="email" name="email" required><br><br>
+<body>
 
-Contraseña<br>
-<input type="password" name="contrasena" required><br><br>
+<div class="container">
 
-Tipo<br>
-<select name="tipo" required>
-    <option value="">-- Selecciona tipo --</option>
-    <?php foreach($tipos as $t): ?>
-        <option value="<?= $t['id'] ?>"><?= htmlspecialchars($t['nombre']) ?></option>
-    <?php endforeach; ?>
-</select><br><br>
+    <div class="card">
+        <h2>Crear usuario</h2>
 
+        <div class="botonera">
+            <a href="inicio.php" class="btn inicio">Volver al inicio</a>
+        </div>
 
+        <form method="POST">
+            <label>Nombre</label>
+            <input type="text" name="nombre" required>
 
-<input type="submit" name="crear" value="Crear usuario">
-</form>
+            <label>Email</label>
+            <input type="email" name="email" required>
 
-<hr>
+            <label>Contraseña</label>
+            <input type="password" name="contrasena" required>
 
-<h2>Lista de usuarios</h2>
-<table border="1">
-<tr>
-<th>ID</th>
-<th>Nombre</th>
-<th>Email</th>
-<th>Tabla</th>
-</tr>
+            <label>Tipo</label>
+            <select name="tipo" required>
+                <option value="">-- Selecciona tipo --</option>
+                <?php foreach($tipos as $t): ?>
+                    <option value="<?= $t['id'] ?>"><?= htmlspecialchars($t['nombre']) ?></option>
+                <?php endforeach; ?>
+            </select>
 
-<?php foreach ($usuarios as $row): ?>
-<tr>
-    <td><?= htmlspecialchars($row["ID"]) ?></td>
-    <td><?= htmlspecialchars($row["NOMBRE"]) ?></td>
-    <td><?= htmlspecialchars($row["email"]) ?></td>
-    <td>
-    <a href="bbdd.php?tabla=<?= urlencode($row["TABLA"]) ?>">
-        <?= htmlspecialchars($row["TABLA"]) ?>
-    </a>
-</td>
-</tr>
-<?php endforeach; ?>
-</table>
+            <input type="submit" name="crear" value="Crear usuario" class="btn">
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Lista de usuarios</h2>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Tabla</th>
+            </tr>
+
+            <?php foreach ($usuarios as $row): ?>
+            <tr>
+                <td><?= htmlspecialchars($row["ID"]) ?></td>
+                <td><?= htmlspecialchars($row["NOMBRE"]) ?></td>
+                <td><?= htmlspecialchars($row["email"]) ?></td>
+                <td>
+                    <a href="alimentos.php?tabla=<?= urlencode($row["TABLA"]) ?>">
+                        <?= htmlspecialchars($row["TABLA"]) ?>
+                    </a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

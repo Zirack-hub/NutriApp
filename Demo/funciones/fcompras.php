@@ -2,7 +2,6 @@
 require_once ("./funciones/funciones.php");
 require_once ("./funciones/fbd.php");
 
-
 function iniciarCarrito()
 {
     if (!isset($_SESSION['carrito'])) {
@@ -19,7 +18,6 @@ function iniciarCarrito()
         $_SESSION['carrito'] = [];
     }
 }
-
 
 function cerrarSesion($cookie_name){
     if (isset($_SESSION['carrito'])) {
@@ -54,18 +52,7 @@ function cerrarSesion($cookie_name){
     exit();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-function createUser(PDO $conn, string $nombre, string $email, string $password, int $tipo): array {
+function createUser(PDO $conn,  $nombre, string $email, string $password, int $tipo): array {
     // 1️⃣ Calcular ID y tabla
     $id = getNextUserId($conn);
     $tabla = generateUserTableName($id);
@@ -120,9 +107,11 @@ function createUser(PDO $conn, string $nombre, string $email, string $password, 
 
     return ['id' => $id, 'tabla' => $tabla];
 }
+
 function generateUserTableName(int $userId): string {
     return "t-" . $userId;
 }
+
 function getNextUserId(PDO $conn): int {
     $stmt = $conn->query("SELECT MAX(ID) AS max_id FROM USUARIOS");
     $maxId = $stmt->fetch(PDO::FETCH_ASSOC)['max_id'];
