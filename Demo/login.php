@@ -20,7 +20,7 @@
                 require_once("./funciones/fbd.php");
                 require_once("./funciones/fcompras.php");
 
-                $conn = openBD("nutriapp");
+                $conn = openBD();
 
                 if(!isset($_COOKIE[$cookie_name])) {
             ?>
@@ -50,7 +50,7 @@
             $clave = limpiar_campos($_POST["clave"]);
 
             $registro = selectCOL("SELECT EMAIL FROM USUARIOS WHERE CONTRASENA = '$clave' AND EMAIL = '$usuario'",$conn);
-                
+            
             if ($registro != null) {
                 setcookie($cookie_name, $registro, time() + (86400 * 30), "/");
                 header("Location: ./inicio");

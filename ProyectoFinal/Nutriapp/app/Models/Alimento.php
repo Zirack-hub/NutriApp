@@ -6,31 +6,33 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alimento extends Model
 {
+    protected $table = 'alimentos';
+    
     protected $fillable = [
-        'USUARIO',
-        'ALIMENTO',
-        'PC_E_100',
-        'PROT_100',
-        'GRASA_100',
-        'AGS_100',
-        'AGMI_100',
-        'AGPI_100',
-        'COL_100',
-        'HC_100',
-        'FIBRA_100',
-        'VIT_C_100',
-        'VIT_B6_100',
-        'VIT_E_100',
-        'FE_100',
-        'NA_100',
-        'CA_100',
-        'K_100',
-        'VIT_D_100'
+        'user_id',
+        'alimento',
+        'pc_e_100',
+        'prot_100',
+        'grasa_100',
+        'ags_100',
+        'agmi_100',
+        'agpi_100',
+        'col_100',
+        'hc_100',
+        'fibra_100',
+        'vit_c_100',
+        'vit_b6_100',
+        'vit_e_100',
+        'fe_100',
+        'na_100',
+        'ca_100',
+        'k_100',
+        'vit_d_100'
     ];
 
-    protected $hidden = ['CREADO_EN', 'ACTUALIZADO_EN'];
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function usuario() {
-        return $this->belongsTo(User::class, 'ID_USUARIO', 'ID');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

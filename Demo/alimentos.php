@@ -2,7 +2,7 @@
 require_once("./funciones/funciones.php");
 require_once("./funciones/fbd.php");
 
-$conn = openBD("nutriapp");
+$conn = openBD();
 
 if (isset($_GET['tabla'])) {
     $tabla = $_GET['tabla'];
@@ -68,7 +68,7 @@ function mostrarTabla($conn, $tabla) {
         </div>
 
         <?php
-        $conn = openBD("nutriapp");
+        $conn = openBD();
         mostrarTabla($conn, $tabla);
         closeBD($conn);
         ?>

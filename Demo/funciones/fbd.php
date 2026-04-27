@@ -3,7 +3,7 @@
 
 function openBD() {
     try {
-        $conn = new PDO("mysql:host=localhost;dbname=nutriapp;charset=utf8",
+        $conn = new PDO("mysql:host=localhost;dbname=nutriapp_demo;charset=utf8",
             "root",
             "rootroot");
         $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);

@@ -13,8 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('alergenos', function (Blueprint $table) {
-            $table->id('ID');
-            $table->string('NOMBRE', 100);
+            $table->id('id');
+            $table->string('nombre', 100);
         });
 
         DB::table('alergenos')->insert([

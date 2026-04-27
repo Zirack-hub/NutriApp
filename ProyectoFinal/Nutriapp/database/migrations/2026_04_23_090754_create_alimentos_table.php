@@ -12,28 +12,28 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('alimentos', function (Blueprint $table) {
-            $table->id('ID');
-            $table->string('ID_USUARIO', 50);
-            $table->string('ALIMENTO', 255);
-            $table->float('PC_E_100',10,2);
-            $table->float('PROT_100',10,2);
-            $table->float('GRASA_100',10,2);
-            $table->float('AGS_100',10,2);
-            $table->float('AGMI_100',10,2);
-            $table->float('AGPI_100',10,2);
-            $table->float('COL_100',10,2);
-            $table->float('HC_100',10,2);
-            $table->float('FIBRA_100',10,2);
-            $table->float('VIT_C_100',10,2);
-            $table->float('VIT_B6_100',10,2);
-            $table->float('VIT_E_100',10,2);
-            $table->float('FE_100',10,2);
-            $table->float('NA_100',10,2);
-            $table->float('CA_100',10,2);
-            $table->float('K_100',10,2);
-            $table->float('VIT_D_100',10,2);
-            $table->timestamp('FECHA_CREACION')->useCurrent(); 
-            $table->timestamp('FECHA_ACTUALIZACION')->useCurrent()->useCurrentOnUpdate();        
+            $table->id('id');
+            $table->string('user_id', 50);
+            $table->string('alimento', 255);
+            $table->float('pc_e_100',10,2);
+            $table->float('prot_100',10,2);
+            $table->float('grasa_100',10,2);
+            $table->float('ags_100',10,2);
+            $table->float('agmi_100',10,2);
+            $table->float('agpi_100',10,2);
+            $table->float('col_100',10,2);
+            $table->float('hc_100',10,2);
+            $table->float('fibra_100',10,2);
+            $table->float('vit_c_100',10,2);
+            $table->float('vit_b6_100',10,2);
+            $table->float('vit_e_100',10,2);
+            $table->float('fe_100',10,2);
+            $table->float('na_100',10,2);
+            $table->float('ca_100',10,2);
+            $table->float('k_100',10,2);
+            $table->float('vit_d_100',10,2);
+            $table->timestamp('fecha_creacion')->useCurrent(); 
+            $table->timestamp('fecha_actualizacion')->useCurrent()->useCurrentOnUpdate();        
         });
     }
 

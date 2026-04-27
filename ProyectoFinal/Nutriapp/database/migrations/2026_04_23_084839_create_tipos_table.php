@@ -13,14 +13,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tipos', function (Blueprint $table) {
-            $table->id('ID');
-            $table->string('NOMBRE',100);
+            $table->id('id');
+            $table->string('nombre',100);
         });
         
         DB::table('tipos')->insert([
-            ['ID' => 1, 'NOMBRE' => 'Admin'],
-            ['ID' => 2, 'NOMBRE' => 'Profesor'],
-            ['ID' => 3, 'NOMBRE' => 'Alumno']
+            ['id' => 1, 'nombre' => 'Admin'],
+            ['id' => 2, 'nombre' => 'Profesor'],
+            ['id' => 3, 'nombre' => 'Alumno']
         ]);
     }
 

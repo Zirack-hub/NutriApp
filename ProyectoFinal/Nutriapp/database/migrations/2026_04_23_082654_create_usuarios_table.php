@@ -14,15 +14,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            $table->id('ID');
-            $table->string('EMAIL', 200)->unique();
-            $table->string('NOMBRE', 100);
-            $table->string('CONTRASENA', 255);
-            $table->integer('TIPO');
+            $table->id('id');
+            $table->string('email', 200)->unique();
+            $table->string('nombre', 100);
+            $table->string('password', 255);
+            $table->integer('tipo');
         });
 
         DB::table('usuarios')->insert([
-            ['ID' => 1, 'EMAIL' => 'admin@admin.com', 'NOMBRE' => 'Admin', 'CONTRASENA' => Hash::make('Admin'), 'TIPO' => 0]
+            ['id' => 1, 'email' => 'admin@admin.com', 'nombre' => 'Admin', 'password' => Hash::make('Admin'), 'tipo' => 1]
         ]);
     }
 
@@ -34,3 +34,4 @@ return new class extends Migration
         Schema::dropIfExists('table_usuarios');
     }
 };
+ 

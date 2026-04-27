@@ -2,7 +2,7 @@
 require_once("./funciones/funciones.php");
 require_once("./funciones/fbd.php");
 
-$conn = openBD("nutriapp");
+$conn = openBD();
 $tabla = selectCOL("SELECT TABLA FROM USUARIOS WHERE EMAIL = '".$_COOKIE['usuarioNutricion']."'", $conn);
 closeBD($conn); 
 
@@ -10,7 +10,7 @@ $mensaje = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
-        $conn = openBD("nutriapp");
+        $conn = openBD();
         $conn->beginTransaction();
 
         $campos = [

@@ -2,21 +2,32 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class User extends Authenticatable
 {
+    use HasFactory, Notifiable;
+
+    protected $table = 'usuarios';
+
     protected $fillable = [
-        'EMAIL',
-        'NOMBRE',
-        'CONTRASENA',
-        'TIPO'
+        'email',
+        'nombre',
+        'password',
+        'tipo'
     ];
 
-    protected $hidden = ['CONTRASENA'];
+    protected $hidden = [
+        'password',
+        'remember_token'
+    ];
 
-    public function alimentos(): HasMany {
-        return $this->hasMany(Alimento::class, 'ID_USUARIO', 'ID');
+    public function alimentos(): HasMany
+    {
+        return $this->hasMany(Alimento::class, 'user_id', 'id');
     }
+
 }

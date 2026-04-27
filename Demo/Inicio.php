@@ -22,7 +22,7 @@
                 require_once ("./funciones/fbd.php");
                 require_once ("./funciones/fcompras.php");
 
-                $conn = openBD("nutriapp");
+                $conn = openBD();
 
                 if(!isset($_COOKIE[$cookie_name])) {
                     header("Location: ./login");
