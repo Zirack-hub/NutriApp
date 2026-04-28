@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+>>>>>>> cd82182 (Subo usuarios sin estilos y sin funcionalidad de eliminar)
 
 Route::get('/', [AuthController::class, 'showLogin'])->name('showlogin');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('showlogin');
