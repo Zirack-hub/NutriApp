@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlimentosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
@@ -13,3 +14,4 @@ Route::get('/usuarios', [UserController::class, 'usuarios'])->name('usuarios');
 Route::get('/usuarios/create', [UserController::class, 'create'])->name('usuarios.create');
 Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
 Route::post('/usuarios/{usuario}/cambiar-password', [UserController::class, 'cambiarPassword'])->name('usuarios.cambiar-password');
+Route::get('/alimentos', [AlimentosController::class,'mostrar'])->name('alimentos');
