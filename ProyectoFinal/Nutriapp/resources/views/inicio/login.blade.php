@@ -3,13 +3,12 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
 @endsection
-
 @section('content')
 <body class="body-login">
 <div class="login-container">
     <div class="login-card">
         <h1 class="login-title">Iniciar Sesión</h1>
-        <form method="POST" action="/login">
+        <form method="POST" action="{{ route('login') }}">
         @csrf
             <div class="input-group">
                         <label>Email</label>

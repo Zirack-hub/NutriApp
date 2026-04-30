@@ -3,7 +3,6 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/inicio.css') }}">
 @endsection
-
 @section('content')
 <div class="container">
     <div class="dashboard">

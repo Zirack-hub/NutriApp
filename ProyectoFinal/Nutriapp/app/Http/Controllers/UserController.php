@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -15,7 +16,6 @@ class UserController extends Controller
         if(!Auth::check()){
             return redirect('/login');
         }
-        
 
         // alumno no puede entrar
         if (Auth::user()->tipo == 3) {
@@ -27,8 +27,8 @@ class UserController extends Controller
         }
         // profesor ve profesor + alumnos
         if (Auth::user()->tipo == 2) {
-            $usuarios = User::whereIn('tipo', [2, 3])->get();
-        }
+            $usuarios = User::whereIn('tipo', [2,3])->get();
+        }   
 
         return view('usuarios.usuarios', compact('usuarios'));
     }
@@ -69,7 +69,7 @@ class UserController extends Controller
     }
     public function cambiarPassword(Request $request, User $usuario){
         if (Auth::user()->tipo != 1) {
-        return redirect('/usuarios')->with('error', 'No tienes permisos');
+        return redirect('/usuarios')->with('error', 'Note created');;
 }
 
         $request->validate([
