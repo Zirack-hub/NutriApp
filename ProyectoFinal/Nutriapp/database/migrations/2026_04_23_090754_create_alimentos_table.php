@@ -32,8 +32,8 @@ return new class extends Migration
             $table->float('ca_100',10,2);
             $table->float('k_100',10,2);
             $table->float('vit_d_100',10,2);
-            $table->timestamp('fecha_creacion')->useCurrent(); 
-            $table->timestamp('fecha_actualizacion')->useCurrent()->useCurrentOnUpdate();        
+            $table->timestamp('created_at')->useCurrent(); 
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();        
         });
     }
 

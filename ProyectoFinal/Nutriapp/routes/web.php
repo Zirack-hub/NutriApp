@@ -14,4 +14,6 @@ Route::get('/usuarios', [UserController::class, 'usuarios'])->name('usuarios');
 Route::get('/usuarios/create', [UserController::class, 'create'])->name('usuarios.create');
 Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
 Route::post('/usuarios/{usuario}/cambiar-password', [UserController::class, 'cambiarPassword'])->name('usuarios.cambiar-password');
-Route::get('/alimentos', [AlimentosController::class,'mostrar'])->name('alimentos');
+Route::get('/alimentos', [AlimentosController::class, 'mostrar'])->name('alimentos');
+Route::get('/alimentos/create', [AlimentosController::class, 'create'])->name('alimentos.create');
+Route::post('/alimentos', [AlimentosController::class, 'store'])->name('alimentos.store');
