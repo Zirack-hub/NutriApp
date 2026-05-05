@@ -1,14 +1,14 @@
 @extends('layouts.default')
 @section('title', 'Alimentos')
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/inicio.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/alimentos.css') }}">
 @endsection
 @section('content')
-<ul>
+<table>
     @forelse($alimentos as $alimento)
-        <li><a href="#">{{ $alimento->alimento }}</a></li>
+        <th><a href="#">{{ $alimento->alimento }}</a></th>
     @empty
         <p>No se han introducido alimentos</p>
     @endforelse
-</ul>
+</table>
 @endsection
