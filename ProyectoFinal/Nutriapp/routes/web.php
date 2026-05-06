@@ -16,6 +16,7 @@ Route::get('/usuarios', [UserController::class, 'usuarios'])->name('usuarios');
 Route::get('/usuarios/create', [UserController::class, 'create'])->name('usuarios.create');
 Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
 Route::post('/usuarios/{usuario}/cambiar-password', [UserController::class, 'cambiarPassword'])->name('usuarios.cambiar-password');
+<<<<<<< HEAD
 
 Route::get('/alimentos', [AlimentoController::class, 'mostrar'])->name('alimentos');
 Route::get('/alimentos/create', [AlimentoController::class, 'create'])->name('alimentos.create');
@@ -27,3 +28,11 @@ Route::post('/dietas', [DietaController::class, 'storeDieta'])->name('dietas.sto
 Route::get('/dietas/{id}', [DietaController::class, 'mostrarDieta'])->name('dietas.show');
 Route::post('/dietas/{id}/alimentos', [DietaController::class, 'agregarAlimento'])->name('dietas.alimentos.agregar');
 Route::delete('/dietas/{id}/alimentos', [DietaController::class, 'eliminarAlimento'])->name('dietas.alimentos.eliminar');
+=======
+Route::get('/alimentos', [AlimentosController::class, 'mostrar'])->name('alimentos');
+Route::get('/alimentos/create', [AlimentosController::class, 'create'])->name('alimentos.create');
+Route::post('/alimentos', [AlimentosController::class, 'store'])->name('alimentos.store');
+Route::get('/alimentos/edit/{alimento}', [AlimentosController::class, 'edit'])->name('alimentos.edit');
+Route::put('/note/edit/{alimento}', [AlimentosController::class, 'update'])->name('alimentos.update');
+Route::delete('/alimentos/destroy/{alimento}', [AlimentosController::class, 'destroy'])->name('alimentos.destroy');
+>>>>>>> 576fb8fbf1fa0ef7b4b5f61ac5fb82fa35845d91
