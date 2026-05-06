@@ -17,3 +17,6 @@ Route::post('/usuarios/{usuario}/cambiar-password', [UserController::class, 'cam
 Route::get('/alimentos', [AlimentosController::class, 'mostrar'])->name('alimentos');
 Route::get('/alimentos/create', [AlimentosController::class, 'create'])->name('alimentos.create');
 Route::post('/alimentos', [AlimentosController::class, 'store'])->name('alimentos.store');
+Route::get('/alimentos/edit/{alimento}', [AlimentosController::class, 'edit'])->name('alimentos.edit');
+Route::put('/note/edit/{alimento}', [AlimentosController::class, 'update'])->name('alimentos.update');
+Route::delete('/alimentos/destroy/{alimento}', [AlimentosController::class, 'destroy'])->name('alimentos.destroy');

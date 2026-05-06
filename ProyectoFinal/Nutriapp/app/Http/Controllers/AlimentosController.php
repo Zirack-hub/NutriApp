@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alimento;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
 class AlimentosController extends Controller
@@ -42,4 +44,22 @@ class AlimentosController extends Controller
         Alimento::create($alimento);
         return redirect()->route('alimentos');
     }
+
+    public function edit (Alimento $alimento): View
+    {
+        return view('alimentos.edit', compact('alimento'));
+    }
+
+    public function update (Request $request, Alimento $alimento): RedirectResponse
+    {
+        $alimento->update($request->all());
+        return redirect()->route('alimentos');
+    }
+
+    public function destroy (Alimento $alimento): RedirectResponse
+    {
+        $alimento->delete();
+        return redirect()->route('alimentos');
+    }
+ 
 }
