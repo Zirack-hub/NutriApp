@@ -19,7 +19,7 @@ return new class extends Migration
         
         DB::table('tipos')->insert([
             ['id' => 1, 'nombre' => 'Admin'],
-            ['id' => 2, 'nombre' => 'Profesor'],
+            ['id' => 2, 'nombre' => 'Profesor'], 
             ['id' => 3, 'nombre' => 'Alumno']
         ]);
     }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email', 200)->unique();
             $table->string('nombre', 100);
             $table->string('password', 255);
-            $table->integer('tipo');
+            $table->foreignId('tipo')->constrained('tipos');
         });
 
         DB::table('usuarios')->insert([
