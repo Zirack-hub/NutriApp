@@ -23,3 +23,10 @@ Route::post('/alimentos', [AlimentoController::class, 'store'])->name('alimentos
 Route::get('/alimentos/edit/{alimento}', [AlimentoController::class, 'edit'])->name('alimentos.edit');
 Route::put('/alimentos/update/{alimento}', [AlimentoController::class, 'update'])->name('alimentos.update');
 Route::delete('/alimentos/destroy/{alimento}', [AlimentoController::class, 'destroy'])->name('alimentos.destroy');
+
+Route::get('/dietas', [DietaController::class, 'mostrarDietas'])->name('dietas');
+Route::get('/dietas/create', [DietaController::class, 'createDieta'])->name('dietas.create');
+Route::post('/dietas', [DietaController::class, 'storeDieta'])->name('dietas.store');
+Route::get('/dietas/{id}', [DietaController::class, 'mostrarDieta'])->name('dietas.show');
+Route::post('/dietas/{id}/alimentos', [DietaController::class, 'agregarAlimento'])->name('dietas.alimentos.agregar');
+Route::delete('/dietas/{id}/alimentos', [DietaController::class, 'eliminarAlimento'])->name('dietas.alimentos.eliminar');
