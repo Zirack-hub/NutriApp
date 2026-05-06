@@ -35,4 +35,8 @@ class Alimento extends Model
     public function usuario() {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function dietas() {
+        return $this->belongsToMany(Dieta::class, 'alimento_dieta');
+    }
 }

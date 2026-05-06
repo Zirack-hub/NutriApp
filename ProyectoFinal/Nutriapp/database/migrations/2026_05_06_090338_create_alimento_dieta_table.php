@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dietas', function (Blueprint $table) {
-            $table->id('id');
-            $table->string('user_id', 50);
-            $table->string('comida', 50);
-            $table->timestamp('created_at')->useCurrent(); 
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();     
+        Schema::create('alimento_dieta', function (Blueprint $table) {
+            $table->foreignId('dieta_id')->constrained('dietas')->onDelete('cascade');
+            $table->foreignId('alimento_id')->constrained('alimentos')->onDelete('cascade');
         });
     }
 
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dietas');
+        Schema::dropIfExists('alimento_dieta');
     }
 };
