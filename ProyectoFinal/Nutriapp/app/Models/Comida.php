@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Comida extends Model
 {
@@ -13,7 +14,8 @@ class Comida extends Model
         'receta'
     ];
 
-    public function dieta() {
+    public function dieta(): BelongsTo
+    {
         return $this->belongsTo(Dieta::class, 'dieta_id', 'id');
     }
 }

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('dietas', function (Blueprint $table) {
             $table->id('id');
+            $table->string('nombre', 50);
             $table->foreignId('user_id')->constrained('usuarios');
-            $table->string('comida', 50);
             $table->unsignedInteger('objetivo');
             $table->timestamp('created_at')->useCurrent(); 
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();     

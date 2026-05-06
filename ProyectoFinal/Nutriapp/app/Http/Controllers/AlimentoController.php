@@ -6,9 +6,8 @@ use App\Models\Alimento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AlimentosController extends Controller
+class AlimentoController extends Controller
 {
-
 
     //Función para mostrar los alimentos
     public function mostrar()

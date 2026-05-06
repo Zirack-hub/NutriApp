@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Alimento extends Model
 {
@@ -33,12 +35,14 @@ class Alimento extends Model
 
     protected $hidden = ['created_at', 'updated_at'];
 
-    public function usuario() {
+    public function usuario(): BelongsTo
+    {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function dietas() {
-        return $this->belongsToMany(Dieta::class, 'alimento_dieta')
-        ->withPivot(['medidas_caseras', 'peso_bruto', 'peso_neto', 'unidad']);
+    public function dietas(): BelongsToMany
+    {
+        return $this->belongsToMany(Dieta::class, 'alimento_dieta');
+                    
     }
 }

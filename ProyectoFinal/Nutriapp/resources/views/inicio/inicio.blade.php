@@ -13,14 +13,19 @@
                 @if (Auth::user()->tipo == 1 || Auth::user()->tipo == 2)
                     <x-card 
                         url="/usuarios" 
-                        title="Usuarios" 
+                        title="Gestión de usuarios" 
                         description="Gestionar usuarios del sistema" 
                     />
                 @endif
                 <x-card 
+                    url="/dietas" 
+                    title="Gestión de dietas" 
+                    description="Crear y administrar dietas" 
+                />
+                <x-card 
                     url="/alimentos" 
-                    title="Base de datos" 
-                    description="Explorar información almacenada" 
+                    title="Gestión de alimentos" 
+                    description="Crear y administrar alimentos" 
                 />
             </div>
             <button type='submit' name='logout' class='logout'>Cerrar sesión</button>"
