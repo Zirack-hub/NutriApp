@@ -11,8 +11,11 @@
         <label>Alimento:</label>
         <input type="text" name="alimento" required/>
 
-        <label>Pc_e_100</label>
-        <input type="number" step="0.01" name="pc_e_100" required/>
+        <label>pc</label>
+        <input type="number" step="0.01" name="pc" required/>
+
+        <label>e_100</label>
+        <input type="number" step="0.01" name="e_100" required/>
 
         <label>prot_100</label>
         <input type="number" step="0.01" name="prot_100" required/>

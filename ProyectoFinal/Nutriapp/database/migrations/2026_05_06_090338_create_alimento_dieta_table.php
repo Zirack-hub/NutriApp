@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('alimento_dieta', function (Blueprint $table) {
-            $table->foreignId('dieta_id')->constrained('dietas')->onDelete('cascade');
-            $table->foreignId('alimento_id')->constrained('alimentos')->onDelete('cascade');
+            $table->foreignId('dieta_id')->constrained('dietas');
+            $table->foreignId('alimento_id')->constrained('alimentos');
+            $table->string('medidas_caseras', 100);
+            $table->decimal('peso_bruto', 20)->unsigned();
+            $table->decimal('peso_neto', 20)->unsigned();
+            $table->string('unidad', 50);
         });
     }
 

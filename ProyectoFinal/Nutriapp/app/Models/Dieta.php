@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Dieta extends Model
 {
@@ -22,5 +24,10 @@ class Dieta extends Model
 
     public function alimentos() {
         return $this->belongsToMany(Alimento::class, 'alimento_dieta');
+    }
+
+    public function comidas(): HasMany
+    {
+        return $this->hasMany(Comida::class, 'dieta_id', 'id');
     }
 }
