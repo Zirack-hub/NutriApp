@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id('id');
             $table->string('user_id', 50);
             $table->string('alimento', 255);
-            $table->float('pc_e_100',10,2);
+            $table->unsignedInteger('pc');
+            $table->float('e_100',10,2);
             $table->float('prot_100',10,2);
             $table->float('grasa_100',10,2);
             $table->float('ags_100',10,2);

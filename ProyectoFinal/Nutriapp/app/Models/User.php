@@ -30,4 +30,9 @@ class User extends Authenticatable
         return $this->hasMany(Alimento::class, 'user_id', 'id');
     }
 
+    public function dietas(): HasMany
+    {
+        return $this->hasMany(Dieta::class, 'user_id', 'id');
+    }
+
 }

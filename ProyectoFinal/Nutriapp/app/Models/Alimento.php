@@ -11,7 +11,8 @@ class Alimento extends Model
     protected $fillable = [
         'user_id',
         'alimento',
-        'pc_e_100',
+        'pc',
+        'e_100',
         'prot_100',
         'grasa_100',
         'ags_100',
@@ -34,5 +35,10 @@ class Alimento extends Model
 
     public function usuario() {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function dietas() {
+        return $this->belongsToMany(Dieta::class, 'alimento_dieta')
+        ->withPivot(['medidas_caseras', 'peso_bruto', 'peso_neto', 'unidad']);
     }
 }
