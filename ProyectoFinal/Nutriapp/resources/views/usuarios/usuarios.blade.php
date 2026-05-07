@@ -13,7 +13,6 @@
                     <th>Nombre</th>
                     <th>Email</th>
                     <th>Tipo</th>
-                    <th>Alimentos</th>
                     <th>Dietas</th>
                     <th>Contraseña</th>
                     <th>Acciones</th>
@@ -22,11 +21,20 @@
             <tbody>
                 @foreach($usuarios as $usuario)
                 <tr>
-                    <td>{{ $usuario->nombre }}</td>
+                    <td>
+                        @if(auth()->user()->tipo != 3)
+                            <a href="{{ route('usuarios.alimentos', $usuario->id) }}">{{ $usuario->nombre }}</a>
+                        @else
+                            {{ $usuario->nombre }}
+                        @endif
+                    </td>
                     <td>{{ $usuario->email }}</td>
                     <td>{{ $usuario->tipoRelacion->nombre ?? $usuario->tipo }}</td>
-                    <td><a href="/alimentos/{{ $usuario->id }}">Ver</a></td>
-                    <td><a href="/dietas/{{ $usuario->id }}">Ver</a></td>
+                    <td>
+                        @if(auth()->user()->tipo != 3)
+                            <a href="{{ route('usuarios.dietas', $usuario->id) }}">Ver</a>
+                        @endif
+                    </td>
                     <td>
                         @if(auth()->user()->tipo == 1)
                             <form method="POST" action="{{ route('usuarios.cambiar-password', $usuario->id) }}" class="form-tabla">

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Alimento;
+use App\Models\Dieta;
+use App\Models\Comida;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
@@ -117,6 +120,60 @@ class UserController extends Controller
         $usuario->delete();
 
         return redirect()->route('usuarios')->with('success', 'Usuario eliminado correctamente');
+    }
+
+    public function verAlimentosDeUsuario(User $usuario)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        // Solo admin y profesor pueden ver datos de otros usuarios
+        if (Auth::user()->tipo == 3) {
+            abort(403);
+        }
+        // Profesor solo puede ver alumnos, no admins
+        if (Auth::user()->tipo == 2 && $usuario->tipo == 1) {
+            abort(403);
+        }
+
+        $alimentos = Alimento::where('user_id', $usuario->id)->get();
+        return view('alimentos.alimentos', compact('alimentos', 'usuario'));
+    }
+
+    public function verDietasDeUsuario(User $usuario)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        // Solo admin y profesor pueden ver datos de otros usuarios
+        if (Auth::user()->tipo == 3) {
+            abort(403);
+        }
+        // Profesor solo puede ver alumnos, no admins
+        if (Auth::user()->tipo == 2 && $usuario->tipo == 1) {
+            abort(403);
+        }
+
+        $primeraDieta = Dieta::where('user_id', $usuario->id)->oldest()->first();
+
+        if (!$primeraDieta) {
+            return redirect()->route('usuarios')->with('error', "{$usuario->nombre} no tiene dietas creadas.");
+        }
+
+        $dieta  = $primeraDieta;
+        $dietas = Dieta::where('user_id', $usuario->id)->get();
+
+        $alimentos_por_comida = $dieta->alimentos()->get()->groupBy('pivot.tipo_comida');
+        foreach ($alimentos_por_comida as $tipo => $items) {
+            $alimentos_por_comida[$tipo] = $items->sortBy('pivot.created_at');
+        }
+
+        $alimentos_usuario    = Alimento::where('user_id', $usuario->id)->get();
+        $kcalTotalDia         = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100 / 100) * 100;
+        $porcentajeAlcanzado  = $dieta->objetivo > 0 ? round($kcalTotalDia / $dieta->objetivo, 2) : 0;
+        $comidas              = Comida::where('dieta_id', $dieta->id)->get()->keyBy('comida');
+
+        return view('dietas.dieta', compact('dieta', 'dietas', 'alimentos_por_comida', 'alimentos_usuario', 'porcentajeAlcanzado', 'kcalTotalDia', 'comidas', 'usuario'));
     }
 
     public function cambiarPassword(Request $request, User $usuario)
