@@ -16,6 +16,7 @@ Route::get('/usuarios', [UserController::class, 'usuarios'])->name('usuarios');
 Route::get('/usuarios/create', [UserController::class, 'create'])->name('usuarios.create');
 Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
 Route::post('/usuarios/{usuario}/cambiar-password', [UserController::class, 'cambiarPassword'])->name('usuarios.cambiar-password');
+Route::delete('/usuarios/{usuario}', [UserController::class, 'destroy'])->name('usuarios.destroy');
 
 Route::get('/alimentos', [AlimentoController::class, 'mostrar'])->name('alimentos');
 Route::get('/alimentos/create', [AlimentoController::class, 'create'])->name('alimentos.create');

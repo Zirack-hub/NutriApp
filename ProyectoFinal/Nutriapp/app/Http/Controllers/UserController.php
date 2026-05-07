@@ -23,11 +23,11 @@ class UserController extends Controller
         }
         // admin ve todos
         if (Auth::user()->tipo == 1) {
-            $usuarios = User::all();
+            $usuarios = User::with('tipoRelacion')->get();
         }
         // profesor ve profesor + alumnos
         if (Auth::user()->tipo == 2) {
-            $usuarios = User::whereIn('tipo', [2,3])->get();
+            $usuarios = User::with('tipoRelacion')->whereIn('tipo', [2,3])->get();
         }   
 
         return view('usuarios.usuarios', compact('usuarios'));
@@ -67,6 +67,23 @@ class UserController extends Controller
 
         return redirect()->route('usuarios')->with('success', 'Usuario creado exitosamente');
     }
+    public function destroy(User $usuario)
+    {
+        // Solo admin puede borrar usuarios
+        if (Auth::user()->tipo != 1) {
+            abort(403, 'No tienes permiso para borrar usuarios');
+        }
+
+        // No puede borrarse a sí mismo
+        if (Auth::id() === $usuario->id) {
+            return redirect()->route('usuarios')->with('error', 'No puedes eliminar tu propio usuario');
+        }
+
+        $usuario->delete();
+
+        return redirect()->route('usuarios')->with('success', 'Usuario eliminado correctamente');
+    }
+
     public function cambiarPassword(Request $request, User $usuario){
         if (Auth::user()->tipo != 1) {
         return redirect('/usuarios')->with('error', 'Note created');;
