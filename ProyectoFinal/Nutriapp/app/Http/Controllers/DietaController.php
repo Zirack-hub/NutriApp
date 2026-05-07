@@ -8,6 +8,8 @@ use App\Models\Alimento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function Laravel\Prompts\alert;
+
 class DietaController extends Controller
 {
     function mostrarDietas()
@@ -61,9 +63,16 @@ class DietaController extends Controller
             ->get()
             ->groupBy('pivot.tipo_comida');
 
+        foreach ($alimentos_por_comida as $tipo => $alimentos) {
+            $alimentos_por_comida[$tipo] = $alimentos->sortBy('pivot.created_at');
+        }
+
         $alimentos_usuario = Alimento::where('user_id', Auth::id())->get();
 
-        return view('dietas.dieta', compact('dieta', 'dietas', 'alimentos_por_comida', 'alimentos_usuario'));
+        $kcalTotal = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100 / 100) * 100;
+        $PorcetanjeAlcanzado = ($kcalTotal / $dieta->objetivo);
+
+        return view('dietas.dieta', compact('dieta', 'dietas', 'alimentos_por_comida', 'alimentos_usuario', 'PorcetanjeAlcanzado'));
     }
 
     function agregarAlimento(Request $request, $id)
@@ -87,7 +96,10 @@ class DietaController extends Controller
             'medidas_caseras' => $request->medidas_caseras,
         ]);
 
-        return redirect()->route('dietas.show', $id);
+        $kcalTotal = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100 / 100) *100;
+        $PorcetanjeAlcanzado = ($kcalTotal / $dieta->objetivo);
+
+        return redirect()->route('dietas.show', $id)->with(compact('PorcetanjeAlcanzado'));
     }
 
     function eliminarAlimento(Request $request, $id)
@@ -96,7 +108,10 @@ class DietaController extends Controller
 
         $dieta->alimentos()->wherePivot('tipo_comida', $request->tipo_comida)
               ->detach($request->alimento_id);
+        
+        $kcalTotal = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100 / 100) *100;
+        $PorcetanjeAlcanzado = ($kcalTotal / $dieta->objetivo);
 
-        return redirect()->route('dietas.show', $id);
+        return redirect()->route('dietas.show', $id)->with(compact('PorcetanjeAlcanzado'));
     }
 }

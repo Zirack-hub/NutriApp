@@ -33,3 +33,9 @@
     </div>
 </div>
 @endsection
+@section('scripts')
+    <script>
+        localStorage.removeItem('secciones_activas');
+        localStorage.removeItem('dieta_actual_id');
+    </script>
+@endsection

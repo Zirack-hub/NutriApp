@@ -4,10 +4,12 @@
     <link rel="stylesheet" href="{{ asset('assets/css/dietas.css') }}">
 @endsection
 @section('content')
+<script src="{{ asset('assets/js/mantener_secciones.js') }}"></script>
 <div class="container">
     <div class="dashboard">
         <h1 class="title">{{ $dieta->nombre }}</h1>
         <p class="objetivo">🎯 Objetivo calórico: {{ $dieta->objetivo }} kcal</p>
+        <p class="objetivo"> Porcentaje calórico alcanzado: {{ $PorcetanjeAlcanzado }} %</p>
         <div class="botonera">
             <a href="{{ route('dietas.create') }}" class="btn">+ Nueva dieta</a>
         </div>
@@ -20,13 +22,7 @@
     </div>
 </div>
 @endsection
-@section('scripts')
-<script>
-    function toggleSeccion(tipo) {
-        const body = document.getElementById('seccion-' + tipo);
-        if (body) {
-            body.classList.toggle('abierto');
-        }
-    }
-</script>
+@section('scripts')  
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('assets/js/mensaje_borrado.js') }}"></script>
 @endsection

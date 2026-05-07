@@ -4,6 +4,32 @@
     <div class="seccion-header" onclick="toggleSeccion('{{ $tipo }}')">
         <span class="seccion-icon">{{ $icono }}</span>
         <span class="seccion-title">{{ ucfirst($tipo) }}</span>
+        <div class="seccion-macros">
+            <span class="macro-item macro-kcal">
+                <span class="macro-label">Kcal: </span>
+                <span class="macro-valor">{{ $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100 / 100) }}</span>
+            </span>
+            <span class="macro-item macro-prot">
+                <span class="macro-label">Prot: </span>
+                <span class="macro-valor">{{ $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->prot_100 / 100) }}</span>
+            </span>
+            <span class="macro-item macro-grasa">
+                <span class="macro-label">Grasas: </span>
+                <span class="macro-valor">{{ $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->grasa_100 / 100) }}</span>
+            </span>
+            <span class="macro-item macro-hc">
+                <span class="macro-label">HC:</span>
+                <span class="macro-valor">{{ $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100 / 100) }}</span>
+            </span>
+            @php
+                $kcalTotal = $alimentos->sum(fn($a) => $a->kcal);
+                $pct = $kcalTotal / $dieta->objetivo;
+            @endphp
+            <span class="macro-item macro-pct">
+                <span class="macro-label">Energia: </span>
+                <span class="macro-valor">{{ $pct }}%</span>
+            </span>
+        </div>
         <span class="seccion-arrow">▾</span>
     </div>
     <div class="seccion-body" id="seccion-{{ $tipo }}">
@@ -15,8 +41,25 @@
                             <th>Alimento</th>
                             <th>Peso bruto (g)</th>
                             <th>Peso neto (g)</th>
-                            <th>Unidad</th>
                             <th>Medidas caseras</th>
+                            <th>pc</th>
+                            <th>e_100</th>
+                            <th>prot_100</th>
+                            <th>grasa_100</th>
+                            <th>ags_100</th>
+                            <th>agmi_100</th>
+                            <th>agpi_100</th>
+                            <th>col_100</th>
+                            <th>hc_100</th>
+                            <th>fibra_100</th>
+                            <th>vit_c_100</th>
+                            <th>vit_b6_100</th>
+                            <th>vit_e_100</th>
+                            <th>fe_100</th>
+                            <th>na_100</th>
+                            <th>ca_100</th>
+                            <th>k_100</th>
+                            <th>vit_d_100</th>
                             <th>Acción</th>
                         </tr>
                     </thead>
@@ -26,10 +69,27 @@
                                 <td>{{ $alimento->alimento }}</td>
                                 <td>{{ $alimento->pivot->peso_bruto }}</td>
                                 <td>{{ $alimento->pivot->peso_neto }}</td>
-                                <td>{{ $alimento->pivot->unidad }}</td>
                                 <td>{{ $alimento->pivot->medidas_caseras ?? '-' }}</td>
+                                <td>{{ $alimento->pc }}</td>
+                                <td>{{ $alimento->e_100 }}</td>
+                                <td>{{ $alimento->prot_100 }}</td>
+                                <td>{{ $alimento->grasa_100 }}</td>
+                                <td>{{ $alimento->ags_100 }}</td>
+                                <td>{{ $alimento->agmi_100 }}</td>
+                                <td>{{ $alimento->agpi_100 }}</td>
+                                <td>{{ $alimento->col_100 }}</td>
+                                <td>{{ $alimento->hc_100 }}</td>
+                                <td>{{ $alimento->fibra_100 }}</td>
+                                <td>{{ $alimento->vit_c_100 }}</td>
+                                <td>{{ $alimento->vit_b6_100 }}</td>
+                                <td>{{ $alimento->vit_e_100 }}</td>
+                                <td>{{ $alimento->fe_100 }}</td>
+                                <td>{{ $alimento->na_100 }}</td>
+                                <td>{{ $alimento->ca_100 }}</td>
+                                <td>{{ $alimento->k_100 }}</td>
+                                <td>{{ $alimento->vit_d_100 }}</td>
                                 <td>
-                                    <form action="{{ route('dietas.alimentos.eliminar', $dieta->id) }}" method="POST">
+                                    <form action="{{ route('dietas.alimentos.eliminar', $dieta->id) }}" method="POST" class="form-eliminar">
                                         @csrf
                                         @method('DELETE')
                                         <input type="hidden" name="alimento_id" value="{{ $alimento->id }}">
@@ -46,10 +106,9 @@
             <p class="empty-msg">No hay alimentos en {{ $tipo }}</p>
         @endif
         <div class="form-añadir">
-            <form action="{{ route('dietas.alimentos.agregar', $dieta->id) }}" method="POST">
+            <form action="{{ route('dietas.alimentos.agregar', $dieta->id, ) }}" method="POST">
                 @csrf
                 <input type="hidden" name="tipo_comida" value="{{ $tipo }}">
-                
                 <select name="alimento_id" class="form-select" required>
                     <option value="">-- Selecciona alimento --</option>
                     @foreach($alimentosUsuario as $alimentoU)

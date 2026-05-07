@@ -112,24 +112,29 @@ body {
     transform: rotate(180deg);
 }
 
+/* ── Tabla compacta con scroll horizontal ── */
 .table-container {
     width: 100%;
     margin-bottom: 16px;
+    overflow-x: auto;          /* scroll si aún no cabe */
+    -webkit-overflow-scrolling: touch;
 }
 
 table {
     width: 100%;
+    min-width: max-content;    /* no colapsa columnas */
     border-collapse: collapse;
     border-radius: 12px;
     overflow: hidden;
     background: rgba(255,255,255,0.7);
     backdrop-filter: blur(6px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    font-size: 0.85em;
+    font-size: 0.72em;         /* ↓ reducido de 0.85em */
+    white-space: nowrap;       /* evita saltos de línea en celdas */
 }
 
 th, td {
-    padding: 8px 12px;
+    padding: 5px 7px;          /* ↓ reducido de 8px 12px */
     text-align: center;
     border-bottom: 1px solid rgba(0,0,0,0.07);
 }
@@ -137,13 +142,38 @@ th, td {
 th {
     background: rgba(255,255,255,0.4);
     color: #5a6f4c;
-    font-size: 0.95em;
+    font-size: 0.9em;
+    position: sticky;          /* cabecera fija al hacer scroll vertical */
+    top: 0;
+    z-index: 1;
+}
+
+/* Primera columna (Alimento) fija al hacer scroll horizontal */
+th:first-child,
+td:first-child {
+    position: sticky;
+    left: 0;
+    background: rgba(240,248,235,0.92);
+    z-index: 2;
+    min-width: 120px;
+    text-align: left;
+}
+
+th:first-child {
+    z-index: 3;
+}
+
+/* Última columna (Acción) con ancho mínimo fijo */
+th:last-child,
+td:last-child {
+    min-width: 70px;
 }
 
 tr:hover {
     background: rgba(255,255,255,0.3);
 }
 
+/* ── Resto sin cambios ── */
 .empty-msg {
     text-align: center;
     color: #5a6f4c;
