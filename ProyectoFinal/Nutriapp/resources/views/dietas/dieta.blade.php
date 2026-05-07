@@ -9,9 +9,13 @@
     <div class="dashboard">
         <h1 class="title">{{ $dieta->nombre }}</h1>
         <p class="objetivo">🎯 Objetivo calórico: {{ $dieta->objetivo }} kcal</p>
-        <p class="objetivo"> Porcentaje calórico alcanzado: {{ $porcentajeAlcanzado }} %</p>
-        <div class="botonera">
-            <a href="{{ route('dietas.create') }}" class="btn">+ Nueva dieta</a>
+        @php
+            $pctAlcanzado = round($porcentajeAlcanzado);
+            $colorBarra = $pctAlcanzado > 105 ? 'danger' : ($pctAlcanzado >= 100 ? 'ok' : 'warning');
+        @endphp
+        <p class="objetivo">🔥 Porcentaje calórico alcanzado: {{ $pctAlcanzado }}%</p>
+        <div class="progress-bar-container">
+            <div class="progress-bar progress-bar--{{ $colorBarra }}" style="width: {{ min($pctAlcanzado, 100) }}%"></div>
         </div>
         <x-seccion tipo="desayuno" icono="🌅" kcalTotalDia="{{ $kcalTotalDia }}" :comidas="$comidas" :alimentos="$alimentos_por_comida['desayuno'] ?? collect()" :alimentos-usuario="$alimentos_usuario" :dieta="$dieta" />
         <x-seccion tipo="almuerzo" icono="🍎" kcalTotalDia="{{ $kcalTotalDia }}" :comidas="$comidas" :alimentos="$alimentos_por_comida['almuerzo'] ?? collect()" :alimentos-usuario="$alimentos_usuario" :dieta="$dieta" />
