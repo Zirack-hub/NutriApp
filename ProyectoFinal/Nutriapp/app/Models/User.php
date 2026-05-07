@@ -20,7 +20,8 @@ class User extends Authenticatable
         'email',
         'nombre',
         'password',
-        'tipo'
+        'tipo',
+        'must_change_password',
     ];
 
     protected $hidden = [
@@ -38,9 +39,9 @@ class User extends Authenticatable
         return $this->hasMany(Dieta::class, 'user_id', 'id');
     }
 
-    public function tipo(): HasOne
+    public function tipoRelacion(): HasOne
     {
-        return $this->hasOne(Tipo::class, 'tipo', 'id');
+        return $this->hasOne(Tipo::class, 'id', 'tipo');
     }
 
 }
