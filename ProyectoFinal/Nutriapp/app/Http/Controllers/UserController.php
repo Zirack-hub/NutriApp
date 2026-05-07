@@ -21,6 +21,8 @@ class UserController extends Controller
         if (Auth::user()->tipo == 3) {
             abort(403, 'No tienes permiso para acceder a esta página');
         }
+        $usuarios = collect();
+
         // admin ve todos
         if (Auth::user()->tipo == 1) {
             $usuarios = User::with('tipoRelacion')->get();
@@ -63,10 +65,43 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'tipo' => $request->tipo,
+            'must_change_password' => $request->tipo == 3 ? true : false,
         ]);
 
         return redirect()->route('usuarios')->with('success', 'Usuario creado exitosamente');
     }
+    public function showCambiarPasswordPropio()
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        if (!Auth::user()->must_change_password) {
+            return redirect('/inicio');
+        }
+        return view('usuarios.cambiar_password_propio');
+    }
+
+    public function cambiarPasswordPropio(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        $request->validate([
+            'password' => 'required|min:6|confirmed',
+        ], [
+            'password.confirmed' => 'Las contraseñas no coinciden.',
+            'password.min'       => 'La contraseña debe tener al menos 6 caracteres.',
+        ]);
+
+        Auth::user()->update([
+            'password' => Hash::make($request->password),
+            'must_change_password' => false,
+        ]);
+
+        return redirect('/inicio')->with('success', '¡Contraseña actualizada correctamente!');
+    }
+
     public function destroy(User $usuario)
     {
         // Solo admin puede borrar usuarios
@@ -75,7 +110,7 @@ class UserController extends Controller
         }
 
         // No puede borrarse a sí mismo
-        if (Auth::id() === $usuario->id) {
+        if (Auth::id() == $usuario->id) {
             return redirect()->route('usuarios')->with('error', 'No puedes eliminar tu propio usuario');
         }
 
@@ -84,20 +119,21 @@ class UserController extends Controller
         return redirect()->route('usuarios')->with('success', 'Usuario eliminado correctamente');
     }
 
-    public function cambiarPassword(Request $request, User $usuario){
+    public function cambiarPassword(Request $request, User $usuario)
+    {
         if (Auth::user()->tipo != 1) {
-        return redirect('/usuarios')->with('error', 'Note created');;
-}
+            return redirect('/usuarios')->with('error', 'No tienes permiso para cambiar contraseñas');
+        }
 
         $request->validate([
             'password' => 'required|min:6'
         ]);
 
         $usuario->update([
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'must_change_password' => true,
         ]);
 
         return redirect('/usuarios');
-    
     }
 }

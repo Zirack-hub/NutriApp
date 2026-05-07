@@ -19,6 +19,9 @@ class AuthController extends Controller
         ];
 
         if(Auth::attempt($credentials)){
+            if(Auth::user()->must_change_password){
+                return redirect()->route('usuarios.cambiar-password-propio');
+            }
             return redirect('/inicio');
         }
         return back()->with('error','Credenciales incorrectas');

@@ -18,6 +18,9 @@ Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store
 Route::post('/usuarios/{usuario}/cambiar-password', [UserController::class, 'cambiarPassword'])->name('usuarios.cambiar-password');
 Route::delete('/usuarios/{usuario}', [UserController::class, 'destroy'])->name('usuarios.destroy');
 
+Route::get('/usuarios/cambiar-password', [UserController::class, 'showCambiarPasswordPropio'])->name('usuarios.cambiar-password-propio');
+Route::post('/usuarios/cambiar-password', [UserController::class, 'cambiarPasswordPropio'])->name('usuarios.cambiar-password-propio.store');
+
 Route::get('/alimentos', [AlimentoController::class, 'mostrar'])->name('alimentos');
 Route::get('/alimentos/create', [AlimentoController::class, 'create'])->name('alimentos.create');
 Route::post('/alimentos', [AlimentoController::class, 'store'])->name('alimentos.store');
