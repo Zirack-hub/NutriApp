@@ -1,115 +1,138 @@
-/* Reset */
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body { height:100%; font-family:'Segoe UI', Tahoma, sans-serif; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    overflow: hidden; /* Evita el scroll si el contenido cabe justo */
+}
 
 body {
-    background-image: url('../imagenes/fondo_normal.png');
+    background-image: url('../images/fondo_normal.png');
     background-size: cover;
     background-position: center;
     display: flex;
+    align-items: center;
     justify-content: center;
-    padding: 50px 0;
+    padding: 10px;
 }
 
-.container { 
-    width:90%; 
-    max-width:1200px; 
+.container {
+    width: 100%;
+    max-width: 1100px; /* Más ancho para que quepan las columnas */
 }
 
-.dashboard {
-    padding:40px;
-    border-radius:25px;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(12px);
-    box-shadow:0 20px 40px rgba(0,0,0,0.15);
-    border:1px solid rgba(255,255,255,0.2);
-    margin-bottom:40px;
-}
-
-.title { 
-    text-align:center; 
-    font-size:2em; 
-    color:#4e6b4e; 
-    margin-bottom:20px; 
-}
-
-.mensaje { 
-    text-align:center; 
-    color:#5a6f4c; 
-    margin-bottom:20px; 
-}
-
-.formulario-grande {
+form {
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px 20px;
-    width: 100%;
+    /* 3 columnas principales, cada una con un subgrid para Label e Input */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 8px 15px;
 }
 
-.form-group-grande.alimento {
-    grid-column: 1 / -1;
-    text-align: center;
-}
-.form-group-grande.alimento label {
-    font-size: 0.9em;
-    margin-bottom: 5px;
-    display: block;
-}
-.form-group-grande.alimento .input-grande {
-    width: 50%;
-    margin: 0 auto;
-    font-size: 0.95em;
-    text-align: center;
+/* Título y Botón ocupan todo el ancho (las 3 columnas) */
+.form-header, .btn-container {
+    grid-column: span 3;
 }
 
-.form-group-grande {
+.field-group {
     display: flex;
-    flex-direction: column;
-}
-.input-grande {
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid rgba(0,0,0,0.2);
-    backdrop-filter: blur(6px);
-    width: 100%;
-    font-size: 0.95em;
-    transition: 0.2s;
-    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: rgba(255,255,255,0.05);
+    padding: 4px 8px;
+    border-radius: 8px;
 }
 
-.input-grande:focus, .input-grande:hover {
-    border-color: #adff2f; 
+label {
+    font-size: 0.75em;
+    font-weight: 700;
+    color: #354d35;
+    white-space: nowrap;
+    flex: 1;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 70px; /* Inputs más pequeños para los números */
+    padding: 5px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.6);
+    color: #1a2a1a;
+    font-size: 0.85em;
     outline: none;
 }
 
-.btn, .reset {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 12px;
-    font-size: 1em;
-    margin-top: 10px;
-}
-.btn {
-    border:none;
-    border-radius:14px;
-    font-weight:bold;
-    cursor:pointer;
-    color:white;
-    background: linear-gradient(135deg,#a8e063,#56ab2f);
-    transition:0.3s;
-    text-decoration:none;
-    display:inline-block;
-}
-.btn:hover { 
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(120,200,80,0.4);
+/* Excepción para el nombre del alimento: que sea largo */
+input[name="alimento"] {
+    width: 100%;
+    flex: 3;
 }
 
-@media (max-width: 768px) {
-    .formulario-grande {
-        grid-template-columns: 1fr;
-    }
-    .form-group-grande.alimento .input-grande {
-        width: 80%;
-    }
+/* Contenedor de botones: los pone uno al lado del otro */
+.btn-container {
+    grid-column: span 3;
+    display: flex;
+    gap: 15px;      /* Espacio entre botones */
+    margin-top: 10px;
+}
+
+/* Estilo base para todos los botones */
+.btn {
+    flex: 1;                /* Hace que ambos botones midan lo mismo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.9em;
+    font-family: inherit;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+/* Botón principal (Verde) */
+.btn-primary {
+    color: white;
+    background: linear-gradient(135deg, #a8e063, #56ab2f);
+    box-shadow: 0 4px 15px rgba(86, 171, 47, 0.3);
+}
+
+/* Botón Volver (Cristal) */
+.btn-back {
+    background: rgba(255, 255, 255, 0.2);
+    color: #4e6b4e;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+/* Hovers */
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 6px 20px rgba(86, 171, 47, 0.4);
+}
+
+.btn-back:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: #2d412d;
 }

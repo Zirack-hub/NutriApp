@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alimento;
+use App\Models\Dieta;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

@@ -1,7 +1,7 @@
 @extends('layouts.formulario')
 @section('title', 'Crear dieta')
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('assets/css/dietas.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/agregar_dietas.css') }}">
 @endsection
 @section('content')
 <div class="container">
@@ -17,6 +17,7 @@
             <input type="number" id="objetivo" name="objetivo" required>
         </div>
         <button type="submit" class="btn">Crear dieta</button>
+        <a href="javascript:history.back()" class="btn btn-back">← Volver</a>
     </form>
 </div>
 @endsection

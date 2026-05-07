@@ -1,10 +1,14 @@
 <link rel="stylesheet" href="{{ asset('assets/css/navbar.css') }}">
 <nav>
     <a href="{{ route('inicio') }}" class="nav-brand">
-        🥗 NutriApp
+        INICIO
     </a>
 
     <div class="nav-spacer"></div>
+
+    <a href="{{ route('alimentos') }}" class="nav-link">
+        🥦 Mis Alimentos
+    </a>
 
     <div class="nav-dropdown">
         <a href="#" class="nav-link">
