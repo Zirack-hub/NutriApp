@@ -14,6 +14,8 @@ class Comida extends Model
         'receta'
     ];
 
+    public $timestamps = false;
+
     public function dieta(): BelongsTo
     {
         return $this->belongsTo(Dieta::class, 'dieta_id', 'id');

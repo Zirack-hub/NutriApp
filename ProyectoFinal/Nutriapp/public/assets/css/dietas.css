@@ -116,25 +116,25 @@ body {
 .table-container {
     width: 100%;
     margin-bottom: 16px;
-    overflow-x: auto;          /* scroll si aún no cabe */
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
 
 table {
     width: 100%;
-    min-width: max-content;    /* no colapsa columnas */
+    min-width: max-content;
     border-collapse: collapse;
     border-radius: 12px;
     overflow: hidden;
     background: rgba(255,255,255,0.7);
     backdrop-filter: blur(6px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    font-size: 0.72em;         /* ↓ reducido de 0.85em */
-    white-space: nowrap;       /* evita saltos de línea en celdas */
+    font-size: 0.72em;
+    white-space: nowrap;
 }
 
 th, td {
-    padding: 5px 7px;          /* ↓ reducido de 8px 12px */
+    padding: 5px 7px;
     text-align: center;
     border-bottom: 1px solid rgba(0,0,0,0.07);
 }
@@ -143,12 +143,11 @@ th {
     background: rgba(255,255,255,0.4);
     color: #5a6f4c;
     font-size: 0.9em;
-    position: sticky;          /* cabecera fija al hacer scroll vertical */
+    position: sticky;
     top: 0;
     z-index: 1;
 }
 
-/* Primera columna (Alimento) fija al hacer scroll horizontal */
 th:first-child,
 td:first-child {
     position: sticky;
@@ -163,7 +162,6 @@ th:first-child {
     z-index: 3;
 }
 
-/* Última columna (Acción) con ancho mínimo fijo */
 th:last-child,
 td:last-child {
     min-width: 70px;
@@ -173,7 +171,7 @@ tr:hover {
     background: rgba(255,255,255,0.3);
 }
 
-/* ── Resto sin cambios ── */
+/* ── Formularios ── */
 .empty-msg {
     text-align: center;
     color: #5a6f4c;
@@ -187,6 +185,7 @@ tr:hover {
     flex-wrap: wrap;
     gap: 8px;
     align-items: center;
+    justify-content: center;
     padding-top: 10px;
     border-top: 1px solid rgba(255,255,255,0.3);
 }
@@ -196,6 +195,17 @@ tr:hover {
     flex-wrap: wrap;
     gap: 8px;
     align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.form-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     width: 100%;
 }
 
@@ -217,6 +227,44 @@ tr:hover {
     background: rgba(255,255,255,0.85);
 }
 
+/* ── Receta ── */
+.receta-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    margin-top: 10px;
+}
+
+.receta-textarea {
+    width: 100%;
+    max-width: 600px;
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+.receta-preview {
+    background: rgba(255,255,255,0.5);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #4e6b4e;
+    font-size: 0.85em;
+    line-height: 1.6;
+    margin-bottom: 8px;
+    white-space: pre-wrap;
+    max-width: 600px;
+    width: 100%;
+}
+
+.oculto {
+    display: none;
+}
+
+/* ── Botones ── */
 .btn {
     padding: 8px 18px;
     border-radius: 14px;
@@ -249,3 +297,42 @@ tr:hover {
     padding: 4px 10px;
     font-size: 0.8em;
 }
+
+/* ── Macros en header ── */
+.seccion-macros {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.macro-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3px 8px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.35);
+    min-width: 48px;
+    line-height: 1.2;
+}
+
+.macro-label {
+    font-size: 0.65em;
+    color: #7a9a6a;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.macro-valor {
+    font-size: 0.82em;
+    font-weight: bold;
+    color: #3a5a3a;
+}
+
+.macro-kcal  { background: rgba(255, 220, 100, 0.35); }
+.macro-prot  { background: rgba(255, 150, 180, 0.35); }
+.macro-grasa { background: rgba(255, 160,  80, 0.35); }
+.macro-hc    { background: rgba(100, 180, 255, 0.35); }
+.macro-pct   { background: rgba(200, 150, 255, 0.35); }

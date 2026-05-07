@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('medidas_caseras', 100);
             $table->decimal('peso_bruto', 20)->unsigned();
             $table->decimal('peso_neto', 20)->unsigned();
-            $table->string('unidad', 50);
         });
     }
 

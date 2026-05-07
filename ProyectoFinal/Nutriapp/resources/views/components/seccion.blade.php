@@ -1,4 +1,4 @@
-@props(['tipo', 'icono', 'alimentos', 'alimentosUsuario', 'dieta'])
+@props(['tipo', 'icono', 'kcalTotalDia', 'comidas', 'alimentos', 'alimentosUsuario', 'dieta'])
 
 <div class="seccion">
     <div class="seccion-header" onclick="toggleSeccion('{{ $tipo }}')">
@@ -22,8 +22,8 @@
                 <span class="macro-valor">{{ $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100 / 100) }}</span>
             </span>
             @php
-                $kcalTotal = $alimentos->sum(fn($a) => $a->kcal);
-                $pct = $kcalTotal / $dieta->objetivo;
+                $kcalTotal = round($alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100), 2);
+                $pct = $kcalTotalDia > 0 ? round($kcalTotal / $kcalTotalDia, 2) * 100 : 0;
             @endphp
             <span class="macro-item macro-pct">
                 <span class="macro-label">Energia: </span>
@@ -118,9 +118,20 @@
                 <div class="form-grid">
                     <input type="number" name="peso_bruto" class="form-input" placeholder="Peso bruto (g)" min="0" required>
                     <input type="number" name="peso_neto" class="form-input" placeholder="Peso neto (g)" min="0" required>
-                    <input type="text" name="unidad" class="form-input" placeholder="Unidad" required>
                     <input type="text" name="medidas_caseras" class="form-input" placeholder="Medidas caseras (opcional)">
                     <button type="submit" class="btn">+ Añadir</button>
+                </div>
+            </form>
+             <form action="{{ route('dietas.receta.agregar', $dieta->id, ) }}" method="POST">
+                @csrf
+                <input type="hidden" name="tipo_comida" value="{{ $tipo }}">
+                <input type="hidden" name="dieta_id" value="{{ $dieta->id }}">  
+                <div class="form-grid">
+                    <textarea name="receta" 
+                            class="form-input receta-textarea" 
+                            placeholder="Escribe o pega aquí la receta..."
+                            rows="4">{{ old('receta', $comidas[$tipo]->receta ?? '') }}</textarea>
+                    <button type="submit" class="btn">💾 Guardar receta</button>
                 </div>
             </form>
         </div>

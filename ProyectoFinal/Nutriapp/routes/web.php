@@ -34,3 +34,4 @@ Route::post('/dietas', [DietaController::class, 'storeDieta'])->name('dietas.sto
 Route::get('/dietas/{id}', [DietaController::class, 'mostrarDieta'])->name('dietas.show');
 Route::post('/dietas/{id}/alimentos', [DietaController::class, 'agregarAlimento'])->name('dietas.alimentos.agregar');
 Route::delete('/dietas/{id}/alimentos', [DietaController::class, 'eliminarAlimento'])->name('dietas.alimentos.eliminar');
+Route::post('/dietas/{dieta}/receta', [DietaController::class, 'agregarReceta'])->name('dietas.receta.agregar');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Dieta;
 use App\Models\Alimento;
+use App\Models\Comida;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -59,9 +60,7 @@ class DietaController extends Controller
         $dieta = Dieta::findOrFail($id);
         $dietas = Dieta::where('user_id', Auth::id())->get();
 
-        $alimentos_por_comida = $dieta->alimentos()
-            ->get()
-            ->groupBy('pivot.tipo_comida');
+        $alimentos_por_comida = $dieta->alimentos()->get()->groupBy('pivot.tipo_comida');
 
         foreach ($alimentos_por_comida as $tipo => $alimentos) {
             $alimentos_por_comida[$tipo] = $alimentos->sortBy('pivot.created_at');
@@ -69,10 +68,11 @@ class DietaController extends Controller
 
         $alimentos_usuario = Alimento::where('user_id', Auth::id())->get();
 
-        $kcalTotal = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100 / 100) * 100;
-        $PorcetanjeAlcanzado = ($kcalTotal / $dieta->objetivo);
+        $kcalTotalDia = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100 / 100) * 100;
+        $porcentajeAlcanzado = round($kcalTotalDia / $dieta->objetivo, 2);
+        $comidas = Comida::where('dieta_id', $id)->get()->keyBy('comida');
 
-        return view('dietas.dieta', compact('dieta', 'dietas', 'alimentos_por_comida', 'alimentos_usuario', 'PorcetanjeAlcanzado'));
+        return view('dietas.dieta', compact('dieta', 'dietas', 'alimentos_por_comida', 'alimentos_usuario', 'porcentajeAlcanzado', 'kcalTotalDia', 'comidas'));
     }
 
     function agregarAlimento(Request $request, $id)
@@ -82,7 +82,6 @@ class DietaController extends Controller
             'tipo_comida'      => 'required|in:desayuno,almuerzo,comida,merienda,cena,suplementos',
             'peso_bruto'       => 'required|numeric|min:0',
             'peso_neto'        => 'required|numeric|min:0',
-            'unidad'           => 'required|string|max:50',
             'medidas_caseras'  => 'nullable|string|max:100',
         ]);
 
@@ -92,14 +91,10 @@ class DietaController extends Controller
             'tipo_comida'     => $request->tipo_comida,
             'peso_bruto'      => $request->peso_bruto,
             'peso_neto'       => $request->peso_neto,
-            'unidad'          => $request->unidad,
             'medidas_caseras' => $request->medidas_caseras,
         ]);
 
-        $kcalTotal = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100 / 100) *100;
-        $PorcetanjeAlcanzado = ($kcalTotal / $dieta->objetivo);
-
-        return redirect()->route('dietas.show', $id)->with(compact('PorcetanjeAlcanzado'));
+        return redirect()->route('dietas.show', $id);
     }
 
     function eliminarAlimento(Request $request, $id)
@@ -109,9 +104,22 @@ class DietaController extends Controller
         $dieta->alimentos()->wherePivot('tipo_comida', $request->tipo_comida)
               ->detach($request->alimento_id);
         
-        $kcalTotal = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100 / 100) *100;
-        $PorcetanjeAlcanzado = ($kcalTotal / $dieta->objetivo);
 
-        return redirect()->route('dietas.show', $id)->with(compact('PorcetanjeAlcanzado'));
+        return redirect()->route('dietas.show', $id);
+    }
+
+    public function agregarReceta(Request $request, $id)
+    {
+        $request->validate([
+            'receta'      => 'required|string',
+            'tipo_comida' => 'required|string',
+        ]);
+
+        Comida::updateOrCreate(
+            ['dieta_id' => $id, 'comida' => $request->tipo_comida],
+            ['receta'   => $request->receta]                      
+        );
+
+    return back()->with('success', 'Receta guardada correctamente.');
     }
 }

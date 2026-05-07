@@ -28,7 +28,7 @@ class Dieta extends Model
     public function alimentos(): BelongsToMany
     {
         return $this->belongsToMany(Alimento::class, 'alimento_dieta')
-            ->withPivot(['tipo_comida', 'medidas_caseras', 'peso_bruto', 'peso_neto', 'unidad']);
+            ->withPivot(['tipo_comida', 'medidas_caseras', 'peso_bruto', 'peso_neto']);
     }
 
     public function comidas(): HasMany
