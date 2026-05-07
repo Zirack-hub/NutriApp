@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Alimento extends Model
 {
     protected $table = 'alimentos';
+
+    protected $casts = [
+        'user_id' => 'string',
+    ];
     
     protected $fillable = [
         'user_id',

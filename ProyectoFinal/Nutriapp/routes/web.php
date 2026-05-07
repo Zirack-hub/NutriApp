@@ -12,15 +12,16 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/inicio', [AuthController::class, 'inicio'])->name('inicio');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Rutas estáticas ANTES que las dinámicas con {usuario}
 Route::get('/usuarios', [UserController::class, 'usuarios'])->name('usuarios');
 Route::get('/usuarios/create', [UserController::class, 'create'])->name('usuarios.create');
 Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
-Route::post('/usuarios/{usuario}/cambiar-password', [UserController::class, 'cambiarPassword'])->name('usuarios.cambiar-password');
-Route::delete('/usuarios/{usuario}', [UserController::class, 'destroy'])->name('usuarios.destroy');
 Route::get('/usuarios/cambiar-password', [UserController::class, 'showCambiarPasswordPropio'])->name('usuarios.cambiar-password-propio');
 Route::post('/usuarios/cambiar-password', [UserController::class, 'cambiarPasswordPropio'])->name('usuarios.cambiar-password-propio.store');
 Route::get('/usuarios/{usuario}/alimentos', [UserController::class, 'verAlimentosDeUsuario'])->name('usuarios.alimentos');
 Route::get('/usuarios/{usuario}/dietas', [UserController::class, 'verDietasDeUsuario'])->name('usuarios.dietas');
+Route::post('/usuarios/{usuario}/cambiar-password', [UserController::class, 'cambiarPassword'])->name('usuarios.cambiar-password');
+Route::delete('/usuarios/{usuario}', [UserController::class, 'destroy'])->name('usuarios.destroy');
 
 Route::get('/alimentos', [AlimentoController::class, 'mostrar'])->name('alimentos');
 Route::get('/alimentos/create', [AlimentoController::class, 'create'])->name('alimentos.create');

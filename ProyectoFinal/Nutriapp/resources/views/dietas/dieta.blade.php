@@ -8,6 +8,9 @@
 <div class="container">
     <div class="dashboard">
         <h1 class="title">{{ $dieta->nombre }}</h1>
+        <div class="botonera">
+            <a href="{{ route('dietas.create') }}" class="btn">+ Nueva dieta</a>
+        </div>
         <p class="objetivo">🎯 Objetivo calórico: {{ $dieta->objetivo }} kcal</p>
         @php
             $pctAlcanzado = round($porcentajeAlcanzado);
