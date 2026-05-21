@@ -11,6 +11,7 @@
     </title>
 </head>
 <body>
+    @include('partials.navbar3')
     @include('partials.mensajes')
     @yield('content')
     @yield('scripts')

@@ -20,8 +20,6 @@
         <div class="progress-bar-container">
             <div class="progress-bar progress-bar--{{ $colorBarra }}" style="width: {{ min($pctAlcanzado, 100) }}%"></div>
         </div>
-        <p class="objetivo">🔥 Creado en: {{ $dieta->created_at }}</p>
-        <p class="objetivo">🔥 Actualizado en: {{ $dieta->updated_at }}</p>
         <x-seccion tipo="desayuno" icono="🌅" kcalTotalDia="{{ $kcalTotalDia }}" :comidas="$comidas" :alimentos="$alimentos_por_comida['desayuno'] ?? collect()" :alimentos-usuario="$alimentos_usuario" :dieta="$dieta" />
         <x-seccion tipo="almuerzo" icono="🍎" kcalTotalDia="{{ $kcalTotalDia }}" :comidas="$comidas" :alimentos="$alimentos_por_comida['almuerzo'] ?? collect()" :alimentos-usuario="$alimentos_usuario" :dieta="$dieta" />
         <x-seccion tipo="comida"   icono="🍽️" kcalTotalDia="{{ $kcalTotalDia }}" :comidas="$comidas" :alimentos="$alimentos_por_comida['comida'] ?? collect()" :alimentos-usuario="$alimentos_usuario" :dieta="$dieta" />
