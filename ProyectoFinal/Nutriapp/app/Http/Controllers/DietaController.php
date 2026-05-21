@@ -72,7 +72,23 @@ class DietaController extends Controller
         $porcentajeAlcanzado = round($kcalTotalDia / $dieta->objetivo, 2);
         $comidas = Comida::where('dieta_id', $id)->get()->keyBy('comida');
 
-        return view('dietas.dieta', compact('dieta', 'dietas', 'alimentos_por_comida', 'alimentos_usuario', 'porcentajeAlcanzado', 'kcalTotalDia', 'comidas'));
+        // Totales de macronutrientes del día
+        $protTotalDia  = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->prot_100  / 100);
+        $grasaTotalDia = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->grasa_100 / 100);
+        $hcTotalDia    = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100    / 100);
+
+        // Porcentajes de macros sobre kcal totales
+        $pctProteinas = $kcalTotalDia > 0 ? round($protTotalDia  * 4 / $kcalTotalDia * 100, 2) : 0;
+        $pctGrasas    = $kcalTotalDia > 0 ? round($grasaTotalDia * 9 / $kcalTotalDia * 100, 2) : 0;
+        $pctHC        = $kcalTotalDia > 0 ? round($hcTotalDia    * 4 / $kcalTotalDia * 100, 2) : 0;
+        $pctMacros    = round($pctProteinas + $pctGrasas + $pctHC, 2);
+
+        return view('dietas.dieta', compact(
+            'dieta', 'dietas', 'alimentos_por_comida', 'alimentos_usuario',
+            'porcentajeAlcanzado', 'kcalTotalDia', 'comidas',
+            'protTotalDia', 'grasaTotalDia', 'hcTotalDia',
+            'pctProteinas', 'pctGrasas', 'pctHC', 'pctMacros'
+        ));
     }
 
     function agregarAlimento(Request $request, $id)

@@ -1,4 +1,4 @@
-@extends('layouts.formulario')
+@extends('layouts.default')
 @section('title', 'Crear dieta')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/agregar_dietas.css') }}">

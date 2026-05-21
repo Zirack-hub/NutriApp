@@ -10,8 +10,14 @@
     </title>
 </head>
 <body>
-    @include('partials.navbar2')
+    <x-navegacion>
+        <a href="{{ route('inicio') }}" class="nav-brand">INICIO</a>
+        <div class="nav-spacer"></div>
+        <a href="{{ route('dietas') }}" class="nav-link">DIETAS</a>
+    </x-navegacion>
     @yield('content')
     @yield('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('assets/js/cerrar_sesion.js') }}"></script>
 </body>
 </html>

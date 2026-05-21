@@ -1,4 +1,4 @@
-@extends('layouts.formulario')
+@extends('layouts.vista_admin')
 @section('title', 'Alimentos de ' . $usuario->nombre)
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/usuarios.css') }}">
@@ -40,8 +40,6 @@
             </tbody>
         </table>
     </div>
-    <div class="botonera-acciones">
-        <a href="{{ route('usuarios') }}" class="btn">⬅️ Volver a usuarios</a>
-    </div>
+
 </div>
 @endsection

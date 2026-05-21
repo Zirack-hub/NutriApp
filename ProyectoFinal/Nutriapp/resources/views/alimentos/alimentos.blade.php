@@ -62,10 +62,16 @@
                             <td>{{ $alimento->vit_d_100 }}</td>
                             <td class="acciones">
                                 <a href="{{ route('alimentos.edit', $alimento->id) }}" class="btn btn-edit btn-sm">✏️</a>
+                                
                                 <form method="POST" action="{{ route('alimentos.destroy', $alimento->id) }}" style="display:inline;" class="form-eliminar">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">✕</button>
+                                    <button type="submit" 
+                                            class="btn btn-danger btn-sm"
+                                            data-nombre="{{ $alimento->alimento }}"
+                                            data-tipo="alimento">
+                                        ✕
+                                    </button>
                                 </form>
                             </td>
                         </tr>
@@ -81,6 +87,5 @@
 </div>
 @endsection
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/js/mensaje_borrado.js') }}"></script>
 @endsection

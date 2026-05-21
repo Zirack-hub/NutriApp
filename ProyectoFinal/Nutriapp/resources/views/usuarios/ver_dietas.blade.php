@@ -1,4 +1,4 @@
-@extends('layouts.formulario')
+@extends('layouts.vista_admin')
 @section('title', 'Dietas de ' . $usuario->nombre)
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/usuarios.css') }}">
@@ -30,6 +30,27 @@
         <p>📊 Porcentaje alcanzado: <strong>{{ $porcentajeAlcanzado }} %</strong></p>
         <p>📊 Creado en: <strong>{{ $dieta->created_at }}</strong></p>
         <p>📊 Actualizado en: <strong>{{ $dieta->updated_at }}</strong></p>
+
+        @php
+            $alimentosTotales = collect($alimentos_por_comida)->flatten();
+            $kcalTotal  = $alimentosTotales->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100   / 100);
+            $protTotal  = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->prot_100  / 100);
+            $grasaTotal = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->grasa_100 / 100);
+            $hcTotal    = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100    / 100);
+            $pctProt = $kcalTotal > 0 ? round($protTotal * 4 / $kcalTotal, 2) : 0;
+            $pctGrasa    = $kcalTotal > 0 ? round($grasaTotal * 9 / $kcalTotal, 2) : 0;
+            $pctHC        = $kcalTotal > 0 ? round($hcTotal    * 4 / $kcalTotal, 2) : 0;
+            $pctMacros    = round($pctProt + $pctGrasa + $pctHC, 2);
+        @endphp
+        <div style="margin-top:1rem;">
+            <p style="font-weight:600; color:#4e6b4e; margin-bottom:0.5rem;">📊 Distribución de macronutrientes</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <span class="macro-pill macro-prot">Proteínas: <strong>{{ round($protTotal, 1) }}g</strong> · <strong>{{ $pctProt }}%</strong></span>
+                <span class="macro-pill macro-grasa">Grasas: <strong>{{ round($grasaTotal, 1) }}g</strong> · <strong>{{ $pctGrasa }}%</strong></span>
+                <span class="macro-pill macro-hc">Hidratos: <strong>{{ round($hcTotal, 1) }}g</strong> · <strong>{{ $pctHC }}%</strong></span>
+                <span class="macro-pill macro-pct">% Macros: <strong>{{ $pctMacros }}%</strong></span>
+            </div>
+        </div>
     </div>
 
     @foreach(['desayuno' => '🌅', 'almuerzo' => '🍎', 'comida' => '🍽️', 'merienda' => '🥪', 'cena' => '🌙', 'suplementos' => '💊'] as $tipo => $icono)
@@ -39,7 +60,8 @@
             $protSeccion  = $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->prot_100 / 100);
             $grasaSeccion = $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->grasa_100 / 100);
             $hcSeccion    = $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100 / 100);
-            $pct = $dieta->objetivo > 0 ? round($kcalSeccion / $dieta->objetivo * 100, 1) : 0;
+            $kcalTotal = round($alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100), 2);
+            $pct = $kcalTotalDia > 0 ? round($kcalTotal / $kcalTotalDia, 2) * 100 : 0;
         @endphp
 
         <div class="card">
@@ -97,9 +119,5 @@
             @endif
         </div>
     @endforeach
-    
-    <div class="botonera-acciones">
-        <a href="{{ route('usuarios') }}" class="btn">⬅️ Volver a usuarios</a>
-    </div>
 </div>
 @endsection

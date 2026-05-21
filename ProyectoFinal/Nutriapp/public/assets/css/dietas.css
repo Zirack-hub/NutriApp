@@ -368,3 +368,63 @@ tr:hover {
 .macro-grasa { background: rgba(255, 160,  80, 0.35); }
 .macro-hc   { background: rgba(100, 180, 255, 0.35); }
 .macro-pct  { background: rgba(200, 150, 255, 0.35); }
+/* ── Bloque resumen de macronutrientes ──────────────────────────── */
+.macros-resumen {
+    margin: 0 0 20px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.35);
+    backdrop-filter: blur(6px);
+}
+
+.macros-resumen-titulo {
+    font-size: 0.95em;
+    font-weight: 700;
+    color: #4e6b4e;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+}
+
+.macros-resumen-pills {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.macro-resumen-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 18px;
+    border-radius: 12px;
+    min-width: 90px;
+    flex: 1;
+}
+
+.macro-resumen-label {
+    font-size: 0.7em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #5a6f4c;
+    margin-bottom: 4px;
+}
+
+.macro-resumen-gramos {
+    font-size: 1.05em;
+    font-weight: 700;
+    color: #3a5a3a;
+}
+
+.macro-resumen-pct {
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #5a6f5a;
+    margin-top: 2px;
+}
+
+.macro-resumen-prot  { background: rgba(255, 150, 180, 0.3); }
+.macro-resumen-grasa { background: rgba(255, 160,  80, 0.3); }
+.macro-resumen-hc    { background: rgba(100, 180, 255, 0.3); }
+.macro-resumen-total { background: rgba(200, 150, 255, 0.3); }
