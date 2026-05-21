@@ -14,6 +14,7 @@
                     <th>Email</th>
                     <th>Tipo</th>
                     <th>Dietas</th>
+                    <th>Alimentos</th>
                     <th>Contraseña</th>
                     <th>Acciones</th>
                 </tr>
@@ -22,17 +23,18 @@
                 @foreach($usuarios as $usuario)
                 <tr>
                     <td>
-                        @if(auth()->user()->tipo != 3)
-                            <a href="{{ route('usuarios.alimentos', $usuario->id) }}">{{ $usuario->nombre }}</a>
-                        @else
-                            {{ $usuario->nombre }}
-                        @endif
+                        {{ $usuario->nombre }}
                     </td>
                     <td>{{ $usuario->email }}</td>
                     <td>{{ $usuario->tipoRelacion->nombre ?? $usuario->tipo }}</td>
                     <td>
                         @if(auth()->user()->tipo != 3)
                             <a href="{{ route('usuarios.dietas', $usuario->id) }}">Ver</a>
+                        @endif
+                    </td>
+                    <td>
+                        @if(auth()->user()->tipo != 3)
+                            <a href="{{ route('usuarios.alimentos', $usuario->id) }}">Ver</a>
                         @endif
                     </td>
                     <td>

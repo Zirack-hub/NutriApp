@@ -36,6 +36,8 @@
                         <th>k_100</th>
                         <th>vit_d_100</th>
                         <th>Acciones</th>
+                        <th>Creado en</th>
+                        <th>Actualizado en</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +62,8 @@
                             <td>{{ $alimento->ca_100 }}</td>
                             <td>{{ $alimento->k_100 }}</td>
                             <td>{{ $alimento->vit_d_100 }}</td>
+                            <td>{{ $alimento->created_at }}</td>
+                            <td>{{ $alimento->updated_at }}</td>
                             <td class="acciones">
                                 <a href="{{ route('alimentos.edit', $alimento->id) }}" class="btn btn-edit btn-sm">✏️</a>
                                 <form method="POST" action="{{ route('alimentos.destroy', $alimento->id) }}" style="display:inline;" class="form-eliminar">

@@ -28,6 +28,8 @@
         <h3 style="color:#4e6b4e; margin-bottom:0.5rem;">{{ $dieta->nombre }}</h3>
         <p>🎯 Objetivo calórico: <strong>{{ $dieta->objetivo }} kcal</strong></p>
         <p>📊 Porcentaje alcanzado: <strong>{{ $porcentajeAlcanzado }} %</strong></p>
+        <p>📊 Creado en: <strong>{{ $dieta->created_at }}</strong></p>
+        <p>📊 Actualizado en: <strong>{{ $dieta->updated_at }}</strong></p>
     </div>
 
     @foreach(['desayuno' => '🌅', 'almuerzo' => '🍎', 'comida' => '🍽️', 'merienda' => '🥪', 'cena' => '🌙', 'suplementos' => '💊'] as $tipo => $icono)

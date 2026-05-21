@@ -13,6 +13,7 @@
         "laravel/framework": "^13.0",
         "laravel/tinker": "^3.0"
     },
+    
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.2.5",
@@ -73,9 +74,15 @@
     "extra": {
         "laravel": {
             "dont-discover": []
+        },
+        "symfony": {
+        "require": "^7.0"
         }
     },
     "config": {
+        "platform": {
+        "php": "8.3.0"
+        },
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,

@@ -16,6 +16,8 @@
                     <th>Grasas</th>
                     <th>H. Carbono</th>
                     <th>Fibra</th>
+                    <th>Creado en</th>
+                    <th>Actualizado en</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +29,8 @@
                         <td>{{ $alimento->grasa_100 }}</td>
                         <td>{{ $alimento->hc_100 }}</td>
                         <td>{{ $alimento->fibra_100 }}</td>
+                        <td>{{ $alimento->created_at }}</td>
+                        <td>{{ $alimento->updated_at }}</td>
                     </tr>
                 @empty
                     <tr>

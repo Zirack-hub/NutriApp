@@ -60,7 +60,7 @@ class AlimentosSeeder extends Seeder
             ['alimento' => 'Nueces', 'pc' => 1, 'e_100' => 654, 'prot_100' => 15.2, 'grasa_100' => 65.2, 'ags_100' => 6.1, 'agmi_100' => 8.9, 'agpi_100' => 47.2, 'col_100' => 0, 'hc_100' => 13.7, 'fibra_100' => 6.7, 'vit_c_100' => 1.3, 'vit_b6_100' => 0.5, 'vit_e_100' => 0.7, 'fe_100' => 2.9, 'na_100' => 2, 'ca_100' => 98, 'k_100' => 441, 'vit_d_100' => 0.0],
         ];
 
-        $userId = 1;
+        $userId = 2;
 
         foreach ($alimentos as $alimento) {
             DB::table('alimentos')->insert(array_merge($alimento, ['user_id' => $userId]));
