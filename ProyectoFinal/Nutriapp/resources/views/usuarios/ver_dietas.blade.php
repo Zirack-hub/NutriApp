@@ -53,6 +53,35 @@
         </div>
     </div>
 
+    <div class="card" style="margin-top: 1rem; margin-bottom: 1rem;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:0.75rem;">
+            <span style="font-size:20px">💬</span>
+            <h3 style="color:#4e6b4e; margin:0;">Retroalimentación para el alumno</h3>
+        </div>
+        <form action="{{ route('dietas.comentario.guardar', $dieta->id) }}" method="POST" style="width: 100%;">
+            @csrf
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <textarea 
+                    name="comentario" 
+                    placeholder="Escribe aquí las correcciones, anotaciones o sugerencias para el alumno sobre esta planificación..." 
+                    style="width: 100%; min-height: 100px; padding: 12px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.15); background: rgba(255,255,255,0.6); font-family: inherit; font-size: 0.9em; color: #4e6b4e; resize: vertical; outline: none;"
+                >{{ old('comentario', $dieta->comentario) }}</textarea>
+                
+                <div style="display: flex; justify-content: flex-end; align-items: center; gap: 12px;">
+                    @if($dieta->comentario)
+                        <span style="font-size: 0.8em; color: {{ $dieta->comentario_leido ? '#56ab2f' : '#ff9800' }}; font-weight: 600;">
+                            {{ $dieta->comentario_leido ? '✓ Visto por el alumno' : '✉️ Pendiente de leer' }}
+                        </span>
+                    @endif
+                    <button type="submit" class="btn" style="padding: 10px 20px; border-radius: 12px; font-weight: bold; color: white; background: linear-gradient(135deg, #a8e063, #56ab2f); border: none; cursor: pointer; transition: 0.3s; font-size:0.85em;">
+                        💾 Guardar comentario
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {{-- Bucle de las comidas existentes --}}
     @foreach(['desayuno' => '🌅', 'almuerzo' => '🍎', 'comida' => '🍽️', 'merienda' => '🥪', 'cena' => '🌙', 'suplementos' => '💊'] as $tipo => $icono)
         @php
             $alimentos = $alimentos_por_comida[$tipo] ?? collect();

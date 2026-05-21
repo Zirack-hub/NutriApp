@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('usuarios');
             $table->unsignedInteger('objetivo');
             $table->text('comentario')->nullable();
+            $table->boolean('comentario_leido')->default(false);
             $table->timestamp('created_at')->useCurrent(); 
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();     
         });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dieta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,13 +32,18 @@ class AuthController extends Controller
         if(!Auth::check()){
             return redirect('/login');
         }
-        return view('inicio.inicio');
+
+        $comentariosNuevos = Dieta::where('user_id', Auth::id())
+            ->whereNotNull('comentario')
+            ->where('comentario', '!=', '')
+            ->where('comentario_leido', false)
+            ->count();
+
+        return view('inicio.inicio', compact('comentariosNuevos'));
     }
 
     public function logout(){
         Auth::logout();
         return redirect('/login');
     }
-
-    
 }

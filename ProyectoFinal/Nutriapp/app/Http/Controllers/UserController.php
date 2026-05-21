@@ -196,4 +196,21 @@ class UserController extends Controller
 
         return redirect('/usuarios');
     }
+
+    public function guardarComentario(Request $request, $dietaId)
+    {
+        $request->validate([
+            'comentario' => 'nullable|string|max:5000',
+        ]);
+
+        $dieta = Dieta::findOrFail($dietaId);
+        
+        $dieta->comentario = $request->comentario;
+        $dieta->comentario_leido = false; 
+        
+        $dieta->updated_at = now();
+        $dieta->save();
+
+        return redirect()->back()->with('success', 'Comentario de retroalimentación actualizado correctamente.');
+    }
 }

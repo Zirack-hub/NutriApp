@@ -1,0 +1,42 @@
+.nav-bell-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-bell-icon {
+    font-size: 1.1em;
+    animation: navSway 2.5s infinite ease-in-out;
+    transform-origin: top center;
+    display: inline-block;
+}
+
+.nav-bell-badge {
+    position: absolute;
+    top: -5px;
+    right: -7px;
+    background: linear-gradient(135deg, #ff6b6b, #e63946);
+    color: white;
+    font-size: 0.6em;
+    font-weight: 800;
+    min-width: 14px;
+    height: 14px;
+    padding: 0 3px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid white;
+    box-shadow: 0 2px 5px rgba(230, 57, 70, 0.3);
+}
+
+@keyframes navSway {
+    0% { transform: rotate(0); }
+    10% { transform: rotate(12deg); }
+    20% { transform: rotate(-12deg); }
+    30% { transform: rotate(8deg); }
+    40% { transform: rotate(-8deg); }
+    50% { transform: rotate(0); }
+    100% { transform: rotate(0); }
+}

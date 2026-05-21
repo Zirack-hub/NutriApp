@@ -11,55 +11,68 @@ use Illuminate\Support\Facades\Auth;
 
 class AlimentoController extends Controller
 {
-
-    //Función para mostrar los alimentos
     public function mostrar()
     {
-        //Si no está la sesión iniciada, se manda a la página de login
         if(!Auth::check()){
             return redirect('/login');
         }
 
-        //Con Eloquent, obligo a que los alimentos que recoja tengan el mismo id que el usuario de la sesión
-        //En el return devuelvo la vista de alimentos y la agrupación de los alimentos
-        $alimentos= Alimento::where('user_id', Auth::user()->id)->get();
-        return view('alimentos.alimentos', compact('alimentos'));
+        $userId = Auth::id();
+
+        $alimentos = Alimento::where('user_id', $userId)->get();
+
+        $comentariosNuevos = Dieta::where('user_id', $userId)
+            ->whereNotNull('comentario')
+            ->where('comentario', '!=', '')
+            ->where('comentario_leido', false)
+            ->count();
+
+        $dietas = Dieta::where('user_id', $userId)->get();
+
+        return view('alimentos.alimentos', compact('alimentos', 'comentariosNuevos', 'dietas'));
     }
 
-    //Función para redirigir a la vista de crear alimentos 
     public function create()
     {
         if(!Auth::check()){
             return redirect('/login');
         }
-        return view('alimentos.create');
+
+        $userId = Auth::id();
+
+        $comentariosNuevos = Dieta::where('user_id', $userId)
+            ->whereNotNull('comentario')
+            ->where('comentario', '!=', '')
+            ->where('comentario_leido', false)
+            ->count();
+
+        $dietas = Dieta::where('user_id', $userId)->get();
+
+        return view('alimentos.create', compact('comentariosNuevos', 'dietas'));
     }
 
-    //Función encargada de guardar el alimento introducido
     public function store(Request $request)
     {
-        $alimento=$request->all();
-        //Por mayor seguridad, el id es introducido aquí y no en la vista
-        $alimento['user_id']=Auth::user()->id;
+        $alimento = $request->all();
+        $alimento['user_id'] = Auth::user()->id;
         Alimento::create($alimento);
         return redirect()->route('alimentos');
     }
 
-    public function edit (Alimento $alimento): View
+    public function edit(Alimento $alimento): View
     {
         return view('alimentos.edit', compact('alimento'));
     }
 
-    public function update (Request $request, Alimento $alimento): RedirectResponse
+    public function update(Request $request, Alimento $alimento): RedirectResponse
     {
         $alimento->update($request->all());
         return redirect()->route('alimentos');
     }
 
-    public function destroy (Alimento $alimento): RedirectResponse
+    public function destroy(Alimento $alimento): RedirectResponse
     {
         $alimento->delete();
         return redirect()->route('alimentos');
     }
- 
 }

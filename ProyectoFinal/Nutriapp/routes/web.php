@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DietaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AlumnoComentarioController;
 
 Route::get('/', [AuthController::class, 'showLogin'])->name('showlogin');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('showlogin');
@@ -39,3 +40,7 @@ Route::put('/dietas/{id}/alimentos', [DietaController::class, 'actualizarAliment
 Route::post('/dietas/{id}/alimentos', [DietaController::class, 'agregarAlimento'])->name('dietas.alimentos.agregar');
 Route::delete('/dietas/{id}/alimentos', [DietaController::class, 'eliminarAlimento'])->name('dietas.alimentos.eliminar');
 Route::post('/dietas/{dieta}/receta', [DietaController::class, 'agregarReceta'])->name('dietas.receta.agregar');
+Route::post('/dietas/{id}/comentario', [UserController::class, 'guardarComentario'])->name('dietas.comentario.guardar');
+
+Route::get('/comentarios', [AlumnoComentarioController::class, 'index'])->name('alumno.comentarios');
+Route::post('/mis-comentarios/{id}/visto', [AlumnoComentarioController::class, 'marcarVisto'])->name('alumno.comentarios.visto');

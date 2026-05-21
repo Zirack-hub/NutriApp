@@ -1,0 +1,206 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+body {
+    background-image: url('../images/fondo_normal.png');
+    background-size: cover;
+    background-position: center;
+    padding-bottom: 40px;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; 
+    z-index: 1000; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.navbar a {
+    color: #4e6b4e;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95em;
+    transition: color 0.2s;
+}
+
+.navbar a:hover {
+    color: #56ab2f;
+}
+
+.container {
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0 10px;
+    margin-top: 90px; 
+}
+
+.dashboard {
+    width: 100%;
+    padding: 25px;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.title {
+    text-align: center;
+    font-size: 1.8em;
+    color: #4e6b4e;
+    margin-bottom: 10px;
+}
+
+.objetivo {
+    text-align: center;
+    font-size: 1em;
+    color: #5a6f4c;
+    margin-bottom: 25px;
+}
+
+.comentarios-list {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.comentario-card {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    border-left: 5px solid #56ab2f;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.comentario-card:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.comentario-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.comentario-dieta-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #4e6b4e;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+}
+
+.comentario-dieta-name:hover {
+    color: #56ab2f;
+    text-decoration: underline;
+}
+
+.comentario-fecha {
+    font-size: 0.85em;
+    color: #7a9a6a;
+    font-weight: 600;
+}
+
+.comentario-texto {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: #4e6b4e;
+    font-size: 0.9em;
+    line-height: 1.6;
+    font-style: italic;
+    white-space: pre-line;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.comentario-action {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 14px;
+}
+
+.btn-ir-dieta {
+    padding: 8px 18px;
+    border-radius: 14px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #a8e063, #56ab2f);
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s;
+    border: none;
+    font-size: 0.85em;
+    box-shadow: 0 4px 10px rgba(120, 200, 80, 0.2);
+}
+
+.btn-ir-dieta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(120, 200, 80, 0.4);
+}
+
+.comentarios-empty {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(6px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #5a6f4c;
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.comentarios-empty-icon {
+    font-size: 2.5em;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.comentarios-empty h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #4e6b4e;
+    margin-bottom: 6px;
+}
+
+.comentarios-empty p {
+    font-size: 0.9em;
+    font-style: italic;
+}

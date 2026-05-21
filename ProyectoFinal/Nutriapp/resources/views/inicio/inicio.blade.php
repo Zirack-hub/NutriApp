@@ -6,9 +6,21 @@
 @section('content')
 <div class="container">
     <div class="dashboard">
-        <h1 class="title">Panel de control</h1>
+        
+        <div class="title-container">
+            <h1 class="title">Panel de control</h1>
+            
+            @if($comentariosNuevos > 0)
+                <a href="{{ route('alumno.comentarios') }}" class="bell-inline-container" title="Tienes {{ $comentariosNuevos }} comentarios nuevos">
+                    <span class="bell-icon">🔔</span>
+                    <span class="bell-count-badge">{{ $comentariosNuevos }}</span>
+                </a>
+            @endif
+        </div>
+        
         <form action="{{ route('logout') }}" method="GET">
             <p class='welcome'>👋 Bienvenido, <strong>{{ Auth::user()->nombre }}</strong></p>
+            
             <div class='grid'>
                 @if (Auth::user()->tipo == 1 || Auth::user()->tipo == 2)
                     <x-card 
@@ -28,11 +40,13 @@
                     description="Crear y administrar alimentos" 
                 />
             </div>
-            <button type='submit' name='logout' class='logout'>Cerrar sesión</button>"
+            
+            <button type='submit' name='logout' class='logout'>Cerrar sesión</button>
         </form>
     </div>
 </div>
 @endsection
+
 @section('scripts')
     <script>
         localStorage.removeItem('secciones_activas');
