@@ -95,13 +95,18 @@
                                         @method('DELETE')
                                         <input type="hidden" name="alimento_id" value="{{ $alimento->id }}">
                                         <input type="hidden" name="tipo_comida" value="{{ $tipo }}">
-                                        <button type="submit" class="btn btn-danger btn-sm">✕</button>
+                                        <button type="submit" 
+                                                class="btn btn-danger btn-sm"
+                                                data-nombre="{{ $alimento->alimento }}"
+                                                data-tipo="alimento">
+                                            ✕
+                                        </button>
                                     </form>
                                 </td>
                                 <td>
                                     <button type="button"
-                                            class="btn btn-sm btn-edit"
-                                            onclick="abrirModalEditar({{ $alimento->id }}, '{{ $tipo }}', {{ $alimento->pivot->peso_bruto }}, {{ $alimento->pivot->peso_neto }}, '{{ $alimento->pivot->medidas_caseras ?? '' }}')">
+                                        class="btn btn-sm btn-edit"
+                                        onclick="abrirModalEditar({{ $alimento->id }}, '{{ $tipo }}', {{ $alimento->pivot->peso_bruto }}, {{ $alimento->pivot->peso_neto }}, '{{ $alimento->pivot->medidas_caseras ?? '' }}')">
                                         ✏️
                                     </button>
                                 </td>
@@ -113,6 +118,7 @@
         @else
             <p class="empty-msg">No hay alimentos en {{ $tipo }}</p>
         @endif
+        
         <div class="form-añadir">
             <form action="{{ route('dietas.alimentos.agregar', $dieta->id) }}" method="POST">
                 @csrf
@@ -130,6 +136,7 @@
                     <button type="submit" class="btn">+ Añadir</button>
                 </div>
             </form>
+            
             <form action="{{ route('dietas.receta.agregar', $dieta->id) }}" method="POST">
                 @csrf
                 <input type="hidden" name="tipo_comida" value="{{ $tipo }}">

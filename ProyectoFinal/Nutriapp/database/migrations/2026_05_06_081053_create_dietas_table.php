@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nombre', 50);
             $table->foreignId('user_id')->constrained('usuarios');
             $table->unsignedInteger('objetivo');
+            $table->text('comentario')->nullable();
             $table->timestamp('created_at')->useCurrent(); 
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();     
         });

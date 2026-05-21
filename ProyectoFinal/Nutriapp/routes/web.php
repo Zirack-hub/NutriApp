@@ -12,7 +12,6 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/inicio', [AuthController::class, 'inicio'])->name('inicio');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Rutas estáticas ANTES que las dinámicas con {usuario}
 Route::get('/usuarios', [UserController::class, 'usuarios'])->name('usuarios');
 Route::get('/usuarios/create', [UserController::class, 'create'])->name('usuarios.create');
 Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
@@ -33,7 +32,10 @@ Route::delete('/alimentos/destroy/{alimento}', [AlimentoController::class, 'dest
 Route::get('/dietas', [DietaController::class, 'mostrarDietas'])->name('dietas');
 Route::get('/dietas/create', [DietaController::class, 'createDieta'])->name('dietas.create');
 Route::post('/dietas', [DietaController::class, 'storeDieta'])->name('dietas.store');
+Route::delete('/dietas/{id}', [DietaController::class, 'destroyDieta'])->name('dietas.destroy');
+Route::put('/dietas/{id}', [DietaController::class, 'updateDieta'])->name('dietas.update');
 Route::get('/dietas/{id}', [DietaController::class, 'mostrarDieta'])->name('dietas.show');
+Route::put('/dietas/{id}/alimentos', [DietaController::class, 'actualizarAlimento'])->name('dietas.alimentos.actualizar');
 Route::post('/dietas/{id}/alimentos', [DietaController::class, 'agregarAlimento'])->name('dietas.alimentos.agregar');
 Route::delete('/dietas/{id}/alimentos', [DietaController::class, 'eliminarAlimento'])->name('dietas.alimentos.eliminar');
 Route::post('/dietas/{dieta}/receta', [DietaController::class, 'agregarReceta'])->name('dietas.receta.agregar');
