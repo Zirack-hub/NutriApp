@@ -60,7 +60,8 @@
                             <th>ca_100</th>
                             <th>k_100</th>
                             <th>vit_d_100</th>
-                            <th>Acción</th>
+                            <th>Eliminar</th>
+                            <th>Editar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,6 +98,13 @@
                                         <button type="submit" class="btn btn-danger btn-sm">✕</button>
                                     </form>
                                 </td>
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-sm btn-edit"
+                                            onclick="abrirModalEditar({{ $alimento->id }}, '{{ $tipo }}', {{ $alimento->pivot->peso_bruto }}, {{ $alimento->pivot->peso_neto }}, '{{ $alimento->pivot->medidas_caseras ?? '' }}')">
+                                        ✏️
+                                    </button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -106,7 +114,7 @@
             <p class="empty-msg">No hay alimentos en {{ $tipo }}</p>
         @endif
         <div class="form-añadir">
-            <form action="{{ route('dietas.alimentos.agregar', $dieta->id, ) }}" method="POST">
+            <form action="{{ route('dietas.alimentos.agregar', $dieta->id) }}" method="POST">
                 @csrf
                 <input type="hidden" name="tipo_comida" value="{{ $tipo }}">
                 <select name="alimento_id" class="form-select" required>
@@ -122,15 +130,15 @@
                     <button type="submit" class="btn">+ Añadir</button>
                 </div>
             </form>
-             <form action="{{ route('dietas.receta.agregar', $dieta->id, ) }}" method="POST">
+            <form action="{{ route('dietas.receta.agregar', $dieta->id) }}" method="POST">
                 @csrf
                 <input type="hidden" name="tipo_comida" value="{{ $tipo }}">
-                <input type="hidden" name="dieta_id" value="{{ $dieta->id }}">  
+                <input type="hidden" name="dieta_id" value="{{ $dieta->id }}">
                 <div class="form-grid">
-                    <textarea name="receta" 
-                            class="form-input receta-textarea" 
-                            placeholder="Escribe o pega aquí la receta..."
-                            rows="4">{{ old('receta', $comidas[$tipo]->receta ?? '') }}</textarea>
+                    <textarea name="receta"
+                              class="form-input receta-textarea"
+                              placeholder="Escribe o pega aquí la receta..."
+                              rows="4">{{ old('receta', $comidas[$tipo]->receta ?? '') }}</textarea>
                     <button type="submit" class="btn">💾 Guardar receta</button>
                 </div>
             </form>

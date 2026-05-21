@@ -352,8 +352,19 @@ tr:hover {
 .progress-bar--warning { background: linear-gradient(90deg, #ff9800, #ffc107); }
 .progress-bar--danger  { background: linear-gradient(90deg, #f44336, #e91e63); }
 
-.macro-kcal  { background: rgba(255, 220, 100, 0.35); }
-.macro-prot  { background: rgba(255, 150, 180, 0.35); }
+.macro-pill {
+    display: inline-block;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 8px;
+    background: #f5f5f0;
+    color: #555;
+    border: 0.5px solid #ddd;
+}
+
+.macro-pill strong { font-weight: 600; }
+.macro-kcal { background: rgba(255, 220, 100, 0.35); }
+.macro-prot { background: rgba(255, 150, 180, 0.35); }
 .macro-grasa { background: rgba(255, 160,  80, 0.35); }
-.macro-hc    { background: rgba(100, 180, 255, 0.35); }
-.macro-pct   { background: rgba(200, 150, 255, 0.35); }
+.macro-hc   { background: rgba(100, 180, 255, 0.35); }
+.macro-pct  { background: rgba(200, 150, 255, 0.35); }

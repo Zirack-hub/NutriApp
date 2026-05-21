@@ -33,9 +33,28 @@
     </div>
 
     @foreach(['desayuno' => '🌅', 'almuerzo' => '🍎', 'comida' => '🍽️', 'merienda' => '🥪', 'cena' => '🌙', 'suplementos' => '💊'] as $tipo => $icono)
-        @php $alimentos = $alimentos_por_comida[$tipo] ?? collect(); @endphp
+        @php
+            $alimentos = $alimentos_por_comida[$tipo] ?? collect();
+            $kcalSeccion  = $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100 / 100);
+            $protSeccion  = $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->prot_100 / 100);
+            $grasaSeccion = $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->grasa_100 / 100);
+            $hcSeccion    = $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100 / 100);
+            $pct = $dieta->objetivo > 0 ? round($kcalSeccion / $dieta->objetivo * 100, 1) : 0;
+        @endphp
+
         <div class="card">
-            <h3 style="color:#4e6b4e; margin-bottom:1rem;">{{ $icono }} {{ ucfirst($tipo) }}</h3>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:0.75rem;">
+                <span style="font-size:20px">{{ $icono }}</span>
+                <h3 style="color:#4e6b4e; margin:0;">{{ ucfirst($tipo) }}</h3>
+            </div>
+
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1rem;">
+                <span class="macro-pill macro-kcal">Kcal: <strong>{{ round($kcalSeccion, 1) }}</strong></span>
+                <span class="macro-pill macro-prot">Prot: <strong>{{ round($protSeccion, 1) }}g</strong></span>
+                <span class="macro-pill macro-grasa">Grasas: <strong>{{ round($grasaSeccion, 1) }}g</strong></span>
+                <span class="macro-pill macro-hc">HC: <strong>{{ round($hcSeccion, 1) }}g</strong></span>
+                <span class="macro-pill macro-pct">Energía: <strong>{{ $pct }}%</strong></span>
+            </div>
 
             @if($alimentos->isNotEmpty())
                 <table>
@@ -78,7 +97,7 @@
             @endif
         </div>
     @endforeach
-
+    
     <div class="botonera-acciones">
         <a href="{{ route('usuarios') }}" class="btn">⬅️ Volver a usuarios</a>
     </div>
