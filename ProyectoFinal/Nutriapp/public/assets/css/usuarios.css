@@ -154,6 +154,16 @@ tr:hover {
     background: linear-gradient(135deg, #757575, #424242);
 }
 
+.btn-danger {
+    background: linear-gradient(135deg, #ff6e7f, #f50a0a);
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(245, 10, 10, 0.3);
+    filter: brightness(1.1);
+}
+
 td a {
     color: #3d8bfd;
     text-decoration: none;

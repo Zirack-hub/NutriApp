@@ -60,8 +60,8 @@
                             <th>ca_100</th>
                             <th>k_100</th>
                             <th>vit_d_100</th>
-                            <th>Eliminar</th>
                             <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,6 +90,13 @@
                                 <td>{{ $alimento->k_100 }}</td>
                                 <td>{{ $alimento->vit_d_100 }}</td>
                                 <td>
+                                    <button type="button"
+                                        class="btn btn-sm btn-edit"
+                                        onclick="abrirModalEditar({{ $alimento->id }}, '{{ $tipo }}', {{ $alimento->pivot->peso_bruto }}, {{ $alimento->pivot->peso_neto }}, '{{ $alimento->pivot->medidas_caseras ?? '' }}')">
+                                        ✏️
+                                    </button>
+                                </td>
+                                <td>
                                     <form action="{{ route('dietas.alimentos.eliminar', $dieta->id) }}" method="POST" class="form-eliminar">
                                         @csrf
                                         @method('DELETE')
@@ -102,13 +109,6 @@
                                             ✕
                                         </button>
                                     </form>
-                                </td>
-                                <td>
-                                    <button type="button"
-                                        class="btn btn-sm btn-edit"
-                                        onclick="abrirModalEditar({{ $alimento->id }}, '{{ $tipo }}', {{ $alimento->pivot->peso_bruto }}, {{ $alimento->pivot->peso_neto }}, '{{ $alimento->pivot->medidas_caseras ?? '' }}')">
-                                        ✏️
-                                    </button>
                                 </td>
                             </tr>
                         @endforeach

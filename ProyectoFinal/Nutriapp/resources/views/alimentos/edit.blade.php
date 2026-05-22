@@ -15,7 +15,7 @@
         <div class="field-group"><label>PC:</label><input type="number" step="0.01" name="pc" value="{{ $alimento->pc }}" required></div>
         <div class="field-group"><label>E_100:</label><input type="number" step="0.01" name="e_100" value="{{ $alimento->e_100 }}" required></div>
         <div class="field-group"><label>Prot:</label><input type="number" step="0.01" name="prot_100" value="{{ $alimento->prot_100 }}" required></div>
-        <div class="field-group"><label>Grasa:</label><input type="number" step="0.01" name="grasa_100" value="{{ $alimento->grasa_100 }}" required></div>
+        <div class="field-group"><label>Grasa:</label><input type="number" step="0.01"  name="grasa_100" value="{{ $alimento->grasa_100 }}" required></div>
         <div class="field-group"><label>AGS:</label><input type="number" step="0.01" name="ags_100" value="{{ $alimento->ags_100 }}" required></div>
         <div class="field-group"><label>AGMI:</label><input type="number" step="0.01" name="agmi_100" value="{{ $alimento->agmi_100 }}" required></div>
         <div class="field-group"><label>AGPI:</label><input type="number" step="0.01" name="agpi_100" value="{{ $alimento->agpi_100 }}" required></div>

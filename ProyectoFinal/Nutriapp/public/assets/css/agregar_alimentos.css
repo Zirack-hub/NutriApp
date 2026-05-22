@@ -7,7 +7,7 @@
 html, body {
     height: 100vh;
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    overflow: hidden; /* Evita el scroll si el contenido cabe justo */
+    overflow: hidden; 
 }
 
 body {
@@ -22,7 +22,7 @@ body {
 
 .container {
     width: 100%;
-    max-width: 1100px; /* Más ancho para que quepan las columnas */
+    max-width: 1100px; 
 }
 
 form {
@@ -33,14 +33,11 @@ form {
     -webkit-backdrop-filter: blur(15px);
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    
     display: grid;
-    /* 3 columnas principales, cada una con un subgrid para Label e Input */
     grid-template-columns: repeat(3, 1fr); 
     gap: 8px 15px;
 }
 
-/* Título y Botón ocupan todo el ancho (las 3 columnas) */
 .form-header, .btn-container {
     grid-column: span 3;
 }
@@ -65,7 +62,7 @@ label {
 
 input[type="text"],
 input[type="number"] {
-    width: 70px; /* Inputs más pequeños para los números */
+    width: 70px; 
     padding: 5px 8px;
     border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.4);
@@ -75,23 +72,20 @@ input[type="number"] {
     outline: none;
 }
 
-/* Excepción para el nombre del alimento: que sea largo */
 input[name="alimento"] {
     width: 100%;
     flex: 3;
 }
 
-/* Contenedor de botones: los pone uno al lado del otro */
 .btn-container {
     grid-column: span 3;
     display: flex;
-    gap: 15px;      /* Espacio entre botones */
+    gap: 15px;     
     margin-top: 10px;
 }
 
-/* Estilo base para todos los botones */
 .btn {
-    flex: 1;                /* Hace que ambos botones midan lo mismo */
+    flex: 1;                
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,22 +101,18 @@ input[name="alimento"] {
     transition: 0.3s;
 }
 
-/* Botón principal (Verde) */
 .btn-primary {
     color: white;
     background: linear-gradient(135deg, #a8e063, #56ab2f);
     box-shadow: 0 4px 15px rgba(86, 171, 47, 0.3);
 }
 
-/* Botón Volver (Cristal) */
 .btn-back {
-    background: rgba(255, 255, 255, 0.2);
-    color: #4e6b4e;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(5px);
+    color: white;
+    background: linear-gradient(135deg, #a8e063, #56ab2f);
+    box-shadow: 0 4px 15px rgba(86, 171, 47, 0.3);
 }
 
-/* Hovers */
 .btn:hover {
     transform: translateY(-2px);
 }
@@ -133,6 +123,6 @@ input[name="alimento"] {
 }
 
 .btn-back:hover {
-    background: rgba(255, 255, 255, 0.4);
-    color: #2d412d;
+    filter: brightness(1.1);
+    box-shadow: 0 6px 20px rgba(86, 171, 47, 0.4);
 }

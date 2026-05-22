@@ -194,7 +194,7 @@ class UserController extends Controller
             'must_change_password' => true,
         ]);
 
-        return redirect('/usuarios');
+        return redirect('/usuarios')->with('success', 'Contraseña actualizada correctamente');
     }
 
     public function guardarComentario(Request $request, $dietaId)

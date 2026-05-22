@@ -31,11 +31,11 @@
                     <option value="3">Alumno</option>
                 </select>
             </div>
-            <button type="submit" class="btn">➕ Crear Usuario</button>
+            <button type="submit" class="btn">+ Crear Usuario</button>
         </form>
     </div>
     <div class="botonera-acciones">
-        <a href="/usuarios" class="btn">⬅️ Volver al listado</a>
+        <a href="/usuarios" class="btn">⬅ Volver al listado</a>
     </div>
 </div>
 @endsection

@@ -8,7 +8,7 @@
     <h2>Gestión de usuarios</h2>
     <div class="botonera-acciones">
         @if(auth()->user()->tipo != 3)
-            <a href="/usuarios/create" class="btn">➕ Crear nuevo usuario</a>
+            <a href="/usuarios/create" class="btn">Crear nuevo usuario</a>
         @endif
     </div>
     <br>
@@ -61,7 +61,7 @@
                                         class="btn btn-danger btn-small" 
                                         data-nombre="{{ $usuario->nombre }}" 
                                         data-tipo="usuario">
-                                    🗑️ Borrar
+                                        Borrar
                                 </button>
                             </form>
                         @endif

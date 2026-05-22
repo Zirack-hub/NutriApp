@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id');
             $table->foreignId('dieta_id')->constrained('dietas');
             $table->string('comida', 50);
-            $table->string('receta', 1500);
+            $table->string('receta', 1500)->nullable();
         });
     }
 

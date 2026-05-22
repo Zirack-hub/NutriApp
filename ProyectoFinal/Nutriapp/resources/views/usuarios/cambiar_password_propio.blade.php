@@ -7,7 +7,7 @@
 <div class="container">
     <h2>🔒 Cambia tu contraseña</h2>
     <div class="card">
-        <p style="margin-bottom:1.2rem; color:#555;">
+        <p style="margin-bottom:1.2rem; color:#555; text-align:center;">
             Es tu primer acceso. Por seguridad, debes establecer una contraseña personal antes de continuar.
         </p>
 

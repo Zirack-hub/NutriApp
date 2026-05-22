@@ -42,7 +42,7 @@
                                     <form action="{{ route('alumno.comentarios.visto', $dieta->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         <button type="submit" style="background: linear-gradient(135deg, #a8e063, #4e6b4e); padding: 6px 14px; font-size: 0.8em; border-radius: 10px; border: none; cursor: pointer; color: white; font-weight: bold; font-family: inherit;">
-                                            👁️ Marcar como leído
+                                            Marcar como leído
                                         </button>
                                     </form>
                                 @endif

@@ -54,7 +54,6 @@ body {
     margin-bottom: 15px;
 }
 
-/* ── Botones ── */
 .btn {
     padding: 8px 18px;
     border-radius: 14px;
@@ -82,21 +81,12 @@ body {
     box-shadow: 0 6px 16px rgba(200,80,80,0.4);
 }
 
-.btn-edit {
-    background: linear-gradient(135deg, #63b3ed, #3182ce);
-}
-
-.btn-edit:hover {
-    box-shadow: 0 6px 16px rgba(49,130,206,0.4);
-}
-
 .btn-sm {
     padding: 4px 8px;
     font-size: 1em;
     border-radius: 8px;
 }
 
-/* ── Tabla ── */
 .table-container {
     width: 100%;
     overflow-x: auto;
