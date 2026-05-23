@@ -43,7 +43,7 @@ class DietaController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'objetivo' => 'required|integer',
+            'objetivo' => 'required|numeric|min:1',
         ]);
 
         Dieta::create([

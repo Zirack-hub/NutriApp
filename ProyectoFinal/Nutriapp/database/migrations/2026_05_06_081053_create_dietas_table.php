@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('dietas', function (Blueprint $table) {
             $table->id('id');
             $table->string('nombre', 50);
-            $table->foreignId('user_id')->constrained('usuarios');
+            $table->foreignId('user_id')->constrained('usuarios')->cascadeOnDelete();
             $table->unsignedInteger('objetivo');
             $table->text('comentario')->nullable();
             $table->boolean('comentario_leido')->default(false);

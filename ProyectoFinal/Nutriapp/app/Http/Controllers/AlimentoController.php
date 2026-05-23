@@ -39,7 +39,7 @@ class AlimentoController extends Controller
         }
 
         $userId = Auth::id();
-
+        
         $comentariosNuevos = Dieta::where('user_id', $userId)
             ->whereNotNull('comentario')
             ->where('comentario', '!=', '')
@@ -53,10 +53,31 @@ class AlimentoController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'alimento' => 'required',
+            'pc' => 'required|integer|min:1',
+            'e_100' => 'required|numeric|min:0',
+            'prot_100' => 'required|numeric|min:0',
+            'grasa_100' => 'required|numeric|min:0',
+            'ags_100' => 'required|numeric|min:0',
+            'agmi_100' => 'required|numeric|min:0',
+            'agpi_100' => 'required|numeric|min:0',
+            'col_100' => 'required|numeric|min:0',
+            'hc_100' => 'required|numeric|min:0',
+            'fibra_100' => 'required|numeric|min:0',
+            'vit_c_100' => 'required|numeric|min:0',
+            'vit_b6_100' => 'required|numeric|min:0',
+            'vit_e_100' => 'required|numeric|min:0',
+            'fe_100' => 'required|numeric|min:0',
+            'na_100' => 'required|numeric|min:0',
+            'ca_100' => 'required|numeric|min:0',
+            'k_100' => 'required|numeric|min:0',
+            'vit_d_100' => 'required|numeric|min:0',
+        ]);
         $alimento = $request->all();
         $alimento['user_id'] = Auth::user()->id;
         Alimento::create($alimento);
-        return redirect()->route('alimentos');
+        return redirect()->route('alimentos')->with('success', 'Alimento creado exitosamente');
     }
 
     public function edit(Alimento $alimento): View

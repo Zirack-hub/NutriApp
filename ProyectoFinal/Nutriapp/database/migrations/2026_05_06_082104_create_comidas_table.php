@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('comidas', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('dieta_id')->constrained('dietas');
+            $table->foreignId('dieta_id')->constrained('dietas')->cascadeOnDelete();
             $table->string('comida', 50);
             $table->string('receta', 1500)->nullable();
         });

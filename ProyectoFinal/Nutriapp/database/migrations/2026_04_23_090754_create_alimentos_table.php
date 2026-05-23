@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('alimentos', function (Blueprint $table) {
             $table->id('id');
-            $table->string('user_id', 50);
+            $table->foreignId('user_id')->constrained('usuarios')->cascadeOnDelete();
             $table->string('alimento', 255);
             $table->unsignedInteger('pc');
             $table->float('e_100',10,2);

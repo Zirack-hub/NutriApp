@@ -41,7 +41,7 @@ class Alimento extends Model
 
     public function usuario(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id')->onDelete('cascade');
     }
 
     public function dietas(): BelongsToMany

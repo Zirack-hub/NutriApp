@@ -10,6 +10,7 @@
     </title>
 </head>
 <body>
+    @include('partials.mensajes')
     @yield('content')
     @yield('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

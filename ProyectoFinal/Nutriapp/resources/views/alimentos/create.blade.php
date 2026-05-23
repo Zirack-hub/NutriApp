@@ -11,7 +11,7 @@
             <label>Alimento:</label>
             <input type="text" name="alimento" placeholder="Nombre del alimento..." required/>
         </div>
-        <div class="field-group"><label>PC:</label><input type="number" step="0.01" name="pc" required></div>
+        <div class="field-group"><label>PC:</label><input type="number" step="1" name="pc" required></div>
         <div class="field-group"><label>E_100:</label><input type="number" step="0.01" name="e_100" required></div>
         <div class="field-group"><label>Prot:</label><input type="number" step="0.01" name="prot_100" required></div>
         <div class="field-group"><label>Grasa:</label><input type="number" step="0.01" name="grasa_100" required></div>
