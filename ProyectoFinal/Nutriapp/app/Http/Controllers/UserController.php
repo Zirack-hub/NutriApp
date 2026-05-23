@@ -13,30 +13,28 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
-   
     public function usuarios()
     {
         if(!Auth::check()){
             return redirect('/login');
         }
 
-        // alumno no puede entrar
         if (Auth::user()->tipo == 3) {
             abort(403, 'No tienes permiso para acceder a esta página');
         }
+
         $usuarios = collect();
 
-        // admin ve todos
         if (Auth::user()->tipo == 1) {
             $usuarios = User::with('tipoRelacion')->get();
         }
-        // profesor ve profesor + alumnos
         if (Auth::user()->tipo == 2) {
             $usuarios = User::with('tipoRelacion')->whereIn('tipo', [2,3])->get();
-        }   
+        }
 
         return view('usuarios.usuarios', compact('usuarios'));
     }
+
     public function create()
     {
         if (Auth::user()->tipo == 3) {
@@ -44,18 +42,17 @@ class UserController extends Controller
         }
         return view('usuarios.create');
     }
+
     public function store(Request $request)
     {
-        
-         // profesor solo puede crear alumnos
         if (Auth::user()->tipo == 2 && $request->tipo == 1) {
             abort(403);
         }
 
-        // alumno no puede crear nada
         if (Auth::user()->tipo == 3) {
             abort(403);
         }
+
         $request->validate([
             'nombre' => 'required',
             'email' => 'required|email|unique:usuarios,email',
@@ -71,8 +68,10 @@ class UserController extends Controller
             'must_change_password' => $request->tipo == 3 ? true : false,
         ]);
 
-        return redirect()->route('usuarios')->with('success', 'Usuario creado exitosamente');
+        return redirect()->route('usuarios')
+            ->with('success', 'Usuario "' . $request->nombre . '" creado correctamente.');
     }
+
     public function showCambiarPasswordPropio()
     {
         if (!Auth::check()) {
@@ -102,24 +101,26 @@ class UserController extends Controller
             'must_change_password' => false,
         ]);
 
-        return redirect('/inicio')->with('success', '¡Contraseña actualizada correctamente!');
+        return redirect('/inicio')
+            ->with('success', 'Contraseña actualizada correctamente.');
     }
 
     public function destroy(User $usuario)
     {
-        // Solo admin puede borrar usuarios
         if (Auth::user()->tipo != 1) {
             abort(403, 'No tienes permiso para borrar usuarios');
         }
 
-        // No puede borrarse a sí mismo
         if (Auth::id() == $usuario->id) {
-            return redirect()->route('usuarios')->with('error', 'No puedes eliminar tu propio usuario');
+            return redirect()->route('usuarios')
+                ->with('error', 'No puedes eliminar tu propio usuario.');
         }
 
+        $nombre = $usuario->nombre;
         $usuario->delete();
 
-        return redirect()->route('usuarios')->with('success', 'Usuario eliminado correctamente');
+        return redirect()->route('usuarios')
+            ->with('success', 'Usuario "' . $nombre . '" eliminado correctamente.');
     }
 
     public function verAlimentosDeUsuario(User $usuario)
@@ -127,11 +128,9 @@ class UserController extends Controller
         if (!Auth::check()) {
             return redirect('/login');
         }
-        // Solo admin y profesor pueden ver datos de otros usuarios
         if (Auth::user()->tipo == 3) {
             abort(403);
         }
-        // Profesor solo puede ver alumnos, no admins
         if (Auth::user()->tipo == 2 && $usuario->tipo == 1) {
             abort(403);
         }
@@ -145,11 +144,9 @@ class UserController extends Controller
         if (!Auth::check()) {
             return redirect('/login');
         }
-        // Solo admin y profesor pueden ver datos de otros usuarios
         if (Auth::user()->tipo == 3) {
             abort(403);
         }
-        // Profesor solo puede ver alumnos, no admins
         if (Auth::user()->tipo == 2 && $usuario->tipo == 1) {
             abort(403);
         }
@@ -157,10 +154,10 @@ class UserController extends Controller
         $dietas = Dieta::where('user_id', $usuario->id)->get();
 
         if ($dietas->isEmpty()) {
-            return redirect()->route('usuarios')->with('error', "{$usuario->nombre} no tiene dietas creadas.");
+            return redirect()->route('usuarios')
+                ->with('error', '"' . $usuario->nombre . '" no tiene dietas creadas.');
         }
 
-        // Si se selecciona una dieta concreta desde el selector, úsala; si no, la primera
         $dietaId = request('dieta_id');
         $dieta = $dietaId
             ? Dieta::where('id', $dietaId)->where('user_id', $usuario->id)->firstOrFail()
@@ -176,13 +173,17 @@ class UserController extends Controller
         $porcentajeAlcanzado = $dieta->objetivo > 0 ? round($kcalTotalDia / $dieta->objetivo, 2) : 0;
         $comidas             = Comida::where('dieta_id', $dieta->id)->get()->keyBy('comida');
 
-        return view('usuarios.ver_dietas', compact('dieta', 'dietas', 'alimentos_por_comida', 'alimentos_usuario', 'porcentajeAlcanzado', 'kcalTotalDia', 'comidas', 'usuario'));
+        return view('usuarios.ver_dietas', compact(
+            'dieta', 'dietas', 'alimentos_por_comida', 'alimentos_usuario',
+            'porcentajeAlcanzado', 'kcalTotalDia', 'comidas', 'usuario'
+        ));
     }
 
     public function cambiarPassword(Request $request, User $usuario)
     {
         if (Auth::user()->tipo != 1) {
-            return redirect('/usuarios')->with('error', 'No tienes permiso para cambiar contraseñas');
+            return redirect('/usuarios')
+                ->with('error', 'No tienes permiso para cambiar contraseñas.');
         }
 
         $request->validate([
@@ -194,7 +195,8 @@ class UserController extends Controller
             'must_change_password' => true,
         ]);
 
-        return redirect('/usuarios')->with('success', 'Contraseña actualizada correctamente');
+        return redirect('/usuarios')
+            ->with('success', 'Contraseña de "' . $usuario->nombre . '" actualizada correctamente.');
     }
 
     public function guardarComentario(Request $request, $dietaId)
@@ -204,13 +206,13 @@ class UserController extends Controller
         ]);
 
         $dieta = Dieta::findOrFail($dietaId);
-        
+
         $dieta->comentario = $request->comentario;
-        $dieta->comentario_leido = false; 
-        
+        $dieta->comentario_leido = false;
         $dieta->updated_at = now();
         $dieta->save();
 
-        return redirect()->back()->with('success', 'Comentario de retroalimentación actualizado correctamente.');
+        return redirect()->back()
+            ->with('success', 'Comentario de la dieta "' . $dieta->nombre . '" actualizado correctamente.');
     }
 }

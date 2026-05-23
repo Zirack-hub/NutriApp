@@ -11,6 +11,7 @@
     </title>
 </head>
 <body>
+    @include('partials.mensajes')
     <x-navegacion>
         <a href="{{ route('usuarios') }}" class="nav-brand">GESTIONAR USUARIOS</a>
     </x-navegacion>

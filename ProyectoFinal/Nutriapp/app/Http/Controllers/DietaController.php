@@ -56,7 +56,8 @@ class DietaController extends Controller
                     ->oldest()
                     ->first();
 
-        return redirect()->route('dietas.show', $primeraDieta->id);
+        return redirect()->route('dietas.show', $primeraDieta->id)
+            ->with('success', 'Dieta "' . $request->nombre . '" creada correctamente.');
     }
 
     function mostrarDieta($id)
@@ -113,19 +114,21 @@ class DietaController extends Controller
             'objetivo' => $request->objetivo,
         ]);
 
-        return redirect()->back()->with('success', 'La configuración de la dieta se ha actualizado.');
+        return redirect()->back()->with('success', 'Dieta "' . $dieta->nombre . '" actualizada correctamente.');
     }
 
     public function destroyDieta($id)
     {
         $dieta = Dieta::findOrFail($id);
+        $nombreDieta = $dieta->nombre;
 
         $dieta->alimentos()->detach();
-
         $dieta->delete();
 
-        return redirect()->route('dietas.show', Dieta::where('user_id', Auth::id())->oldest()->first()->id)
-            ->with('success', 'La dieta y toda su planificación se han eliminado correctamente.');
+        $siguiente = Dieta::where('user_id', Auth::id())->oldest()->first();
+
+        return redirect()->route('dietas.show', $siguiente->id)
+            ->with('success', 'Dieta "' . $nombreDieta . '" eliminada correctamente.');
     }
 
     function agregarAlimento(Request $request, $id)
@@ -139,6 +142,7 @@ class DietaController extends Controller
         ]);
 
         $dieta = Dieta::findOrFail($id);
+        $alimento = Alimento::findOrFail($request->alimento_id);
 
         $dieta->alimentos()->attach($request->alimento_id, [
             'tipo_comida'     => $request->tipo_comida,
@@ -150,7 +154,8 @@ class DietaController extends Controller
         $dieta->updated_at = now();
         $dieta->save();
 
-        return redirect()->route('dietas.show', $id);
+        return redirect()->route('dietas.show', $id)
+            ->with('success', '"' . $alimento->alimento . '" añadido al ' . $request->tipo_comida . ' correctamente.');
     }
 
     public function actualizarAlimento(Request $request, $dietaId)
@@ -165,10 +170,11 @@ class DietaController extends Controller
         ]);
 
         $dieta = Dieta::findOrFail($dietaId);
+        $alimentoNuevo = Alimento::findOrFail($request->alimento_id_nuevo);
 
         if ($request->alimento_id_viejo != $request->alimento_id_nuevo) {
             $dieta->alimentos()->wherePivot('tipo_comida', $request->tipo_comida)->detach($request->alimento_id_viejo);
-            
+
             $dieta->alimentos()->attach($request->alimento_id_nuevo, [
                 'tipo_comida'     => $request->tipo_comida,
                 'peso_bruto'      => $request->peso_bruto,
@@ -187,12 +193,15 @@ class DietaController extends Controller
         $dieta->updated_at = now();
         $dieta->save();
 
-        return redirect()->back()->with('success', 'Alimento modificado con éxito.');
+        return redirect()->back()
+            ->with('success', '"' . $alimentoNuevo->alimento . '" actualizado correctamente.');
     }
 
     function eliminarAlimento(Request $request, $id)
     {
         $dieta = Dieta::findOrFail($id);
+        $alimento = Alimento::findOrFail($request->alimento_id);
+        $nombreAlimento = $alimento->alimento;
 
         $dieta->alimentos()->wherePivot('tipo_comida', $request->tipo_comida)
               ->detach($request->alimento_id);
@@ -200,7 +209,8 @@ class DietaController extends Controller
         $dieta->updated_at = now();
         $dieta->save();
 
-        return redirect()->route('dietas.show', $id);
+        return redirect()->route('dietas.show', $id)
+            ->with('success', '"' . $nombreAlimento . '" eliminado del ' . $request->tipo_comida . ' correctamente.');
     }
 
     public function agregarReceta(Request $request, $id)
@@ -212,9 +222,9 @@ class DietaController extends Controller
 
         Comida::updateOrCreate(
             ['dieta_id' => $id, 'comida' => $request->tipo_comida],
-            ['receta'   => $request->receta]                      
+            ['receta'   => $request->receta]
         );
 
-        return back()->with('success', 'Receta guardada correctamente.');
+        return back()->with('success', 'Receta para el ' . $request->tipo_comida . ' guardada correctamente.');
     }
 }

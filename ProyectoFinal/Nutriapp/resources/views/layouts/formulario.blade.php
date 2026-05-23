@@ -11,6 +11,7 @@
     </title>
 </head>
 <body>
+    @include('partials.mensajes')
     <x-navegacion>
         <a href="{{ route('inicio') }}" class="nav-brand">INICIO</a>
         <div class="nav-spacer"></div>

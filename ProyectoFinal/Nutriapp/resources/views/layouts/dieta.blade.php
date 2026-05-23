@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('assets/css/campana.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/mensajes.css') }}">
     @yield('styles')
     <title>
         @yield('title')
     </title>
 </head>
 <body>
+    @include('partials.mensajes')
     <x-navegacion>
         <a href="{{ route('inicio') }}" class="nav-brand">INICIO</a>
         <div class="nav-spacer"></div>

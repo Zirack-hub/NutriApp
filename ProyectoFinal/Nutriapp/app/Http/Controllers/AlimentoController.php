@@ -39,7 +39,7 @@ class AlimentoController extends Controller
         }
 
         $userId = Auth::id();
-        
+
         $comentariosNuevos = Dieta::where('user_id', $userId)
             ->whereNotNull('comentario')
             ->where('comentario', '!=', '')
@@ -74,26 +74,45 @@ class AlimentoController extends Controller
             'k_100' => 'required|numeric|min:0',
             'vit_d_100' => 'required|numeric|min:0',
         ]);
-        $alimento = $request->all();
-        $alimento['user_id'] = Auth::user()->id;
-        Alimento::create($alimento);
-        return redirect()->route('alimentos')->with('success', 'Alimento creado exitosamente');
+
+        $datos = $request->all();
+        $datos['user_id'] = Auth::user()->id;
+        Alimento::create($datos);
+
+        return redirect()->route('alimentos')
+            ->with('success', '"' . $request->alimento . '" creado correctamente.');
     }
 
     public function edit(Alimento $alimento): View
     {
+        $userId = Auth::id();
+
         return view('alimentos.edit', compact('alimento'));
     }
 
     public function update(Request $request, Alimento $alimento): RedirectResponse
     {
-        $alimento->update($request->all());
-        return redirect()->route('alimentos');
+        try {
+            $nombreAnterior = $alimento->alimento;
+            $alimento->update($request->all());
+            return redirect()->route('alimentos')
+                ->with('success', '"' . $nombreAnterior . '" actualizado correctamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'No se pudo actualizar "' . $alimento->alimento . '".');
+        }
     }
 
     public function destroy(Alimento $alimento): RedirectResponse
     {
-        $alimento->delete();
-        return redirect()->route('alimentos');
+        try {
+            $nombre = $alimento->alimento;
+            $alimento->delete();
+            return redirect()->route('alimentos')
+                ->with('success', '"' . $nombre . '" eliminado correctamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'No se pudo eliminar "' . $alimento->alimento . '".');
+        }
     }
 }

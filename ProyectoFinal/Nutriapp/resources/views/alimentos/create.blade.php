@@ -13,22 +13,22 @@
         </div>
         <div class="field-group"><label>PC:</label><input type="number" step="1" name="pc" required></div>
         <div class="field-group"><label>E_100:</label><input type="number" step="0.01" name="e_100" required></div>
-        <div class="field-group"><label>Prot:</label><input type="number" step="0.01" name="prot_100" required></div>
-        <div class="field-group"><label>Grasa:</label><input type="number" step="0.01" name="grasa_100" required></div>
-        <div class="field-group"><label>AGS:</label><input type="number" step="0.01" name="ags_100" required></div>
-        <div class="field-group"><label>AGMI:</label><input type="number" step="0.01" name="agmi_100" required></div>
-        <div class="field-group"><label>AGPI:</label><input type="number" step="0.01" name="agpi_100" required></div>
-        <div class="field-group"><label>Colest:</label><input type="number" step="0.01" name="col_100" required></div>
-        <div class="field-group"><label>HC:</label><input type="number" step="0.01" name="hc_100" required></div>
-        <div class="field-group"><label>Fibra:</label><input type="number" step="0.01" name="fibra_100" required></div>
-        <div class="field-group"><label>Vit C:</label><input type="number" step="0.01" name="vit_c_100" required></div>
-        <div class="field-group"><label>Vit B6:</label><input type="number" step="0.01" name="vit_b6_100" required></div>
-        <div class="field-group"><label>Vit E:</label><input type="number" step="0.01" name="vit_e_100" required></div>
-        <div class="field-group"><label>Fe:</label><input type="number" step="0.01" name="fe_100" required></div>
-        <div class="field-group"><label>Na:</label><input type="number" step="0.01" name="na_100" required></div>
-        <div class="field-group"><label>Ca:</label><input type="number" step="0.01" name="ca_100" required></div>
-        <div class="field-group"><label>K:</label><input type="number" step="0.01" name="k_100" required></div>
-        <div class="field-group"><label>Vit D:</label><input type="number" step="0.01" name="vit_d_100" required></div>
+        <div class="field-group"><label>Prot_100:</label><input type="number" step="0.01" name="prot_100" required></div>
+        <div class="field-group"><label>Grasa_100:</label><input type="number" step="0.01" name="grasa_100" required></div>
+        <div class="field-group"><label>AGS_100:</label><input type="number" step="0.01" name="ags_100" required></div>
+        <div class="field-group"><label>AGMI_100:</label><input type="number" step="0.01" name="agmi_100" required></div>
+        <div class="field-group"><label>AGPI_100:</label><input type="number" step="0.01" name="agpi_100" required></div>
+        <div class="field-group"><label>Colest_100:</label><input type="number" step="0.01" name="col_100" required></div>
+        <div class="field-group"><label>HC_100:</label><input type="number" step="0.01" name="hc_100" required></div>
+        <div class="field-group"><label>Fibra_100:</label><input type="number" step="0.01" name="fibra_100" required></div>
+        <div class="field-group"><label>Vit C_100:</label><input type="number" step="0.01" name="vit_c_100" required></div>
+        <div class="field-group"><label>Vit B6_100:</label><input type="number" step="0.01" name="vit_b6_100" required></div>
+        <div class="field-group"><label>Vit E_100:</label><input type="number" step="0.01" name="vit_e_100" required></div>
+        <div class="field-group"><label>Fe_100:</label><input type="number" step="0.01" name="fe_100" required></div>
+        <div class="field-group"><label>Na_100:</label><input type="number" step="0.01" name="na_100" required></div>
+        <div class="field-group"><label>Ca_100:</label><input type="number" step="0.01" name="ca_100" required></div>
+        <div class="field-group"><label>K_100:</label><input type="number" step="0.01" name="k_100" required></div>
+        <div class="field-group"><label>Vit D_100:</label><input type="number" step="0.01" name="vit_d_100" required></div>
         <div class="btn-container">
             <button type="submit" class="btn btn-primary">Crear alimento</button>
             <a href="javascript:history.back()" class="btn btn-back">
