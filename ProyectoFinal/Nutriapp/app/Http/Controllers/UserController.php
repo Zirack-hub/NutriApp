@@ -13,6 +13,8 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    // Muestra la lista de usuarios según el rol del autenticado:
+    // el admin ve todos, el profesor ve profesores y alumnos, el alumno no tiene acceso
     public function usuarios()
     {
         if(!Auth::check()){
@@ -35,6 +37,7 @@ class UserController extends Controller
         return view('usuarios.usuarios', compact('usuarios'));
     }
 
+    // Muestra el formulario para crear un nuevo usuario (solo admin y profesor)
     public function create()
     {
         if (Auth::user()->tipo == 3) {
@@ -43,6 +46,8 @@ class UserController extends Controller
         return view('usuarios.create');
     }
 
+    // Valida y guarda un nuevo usuario en la base de datos.
+    // El profesor solo puede crear alumnos; el alumno no puede crear ningún usuario
     public function store(Request $request)
     {
         if (Auth::user()->tipo == 2 && $request->tipo == 1) {
@@ -72,6 +77,8 @@ class UserController extends Controller
             ->with('success', 'Usuario "' . $request->nombre . '" creado correctamente.');
     }
 
+    // Muestra el formulario para que el usuario cambie su propia contraseña por primera vez.
+    // Solo accesible si el flag must_change_password está activo
     public function showCambiarPasswordPropio()
     {
         if (!Auth::check()) {
@@ -83,6 +90,8 @@ class UserController extends Controller
         return view('usuarios.cambiar_password_propio');
     }
 
+    // Procesa el cambio de contraseña propio, desactiva el flag must_change_password
+    // y redirige al inicio
     public function cambiarPasswordPropio(Request $request)
     {
         if (!Auth::check()) {
@@ -105,6 +114,8 @@ class UserController extends Controller
             ->with('success', 'Contraseña actualizada correctamente.');
     }
 
+    // Elimina un usuario de la base de datos. Solo el admin puede hacerlo
+    // y no puede eliminarse a sí mismo
     public function destroy(User $usuario)
     {
         if (Auth::user()->tipo != 1) {
@@ -123,6 +134,8 @@ class UserController extends Controller
             ->with('success', 'Usuario "' . $nombre . '" eliminado correctamente.');
     }
 
+    // Muestra los alimentos registrados por un usuario concreto.
+    // Solo accesible para admin y profesor; el profesor no puede ver datos de admins
     public function verAlimentosDeUsuario(User $usuario)
     {
         if (!Auth::check()) {
@@ -139,6 +152,8 @@ class UserController extends Controller
         return view('usuarios.ver_alimentos', compact('alimentos', 'usuario'));
     }
 
+    // Muestra las dietas de un usuario concreto con todos sus detalles nutricionales.
+    // Permite seleccionar una dieta concreta mediante el parámetro dieta_id en la URL
     public function verDietasDeUsuario(User $usuario)
     {
         if (!Auth::check()) {
@@ -179,6 +194,8 @@ class UserController extends Controller
         ));
     }
 
+    // Cambia la contraseña de un usuario concreto (solo el admin puede hacerlo)
+    // y activa el flag must_change_password para forzar el cambio en el próximo login
     public function cambiarPassword(Request $request, User $usuario)
     {
         if (Auth::user()->tipo != 1) {
@@ -199,6 +216,8 @@ class UserController extends Controller
             ->with('success', 'Contraseña de "' . $usuario->nombre . '" actualizada correctamente.');
     }
 
+    // Guarda o actualiza el comentario de retroalimentación de un profesor sobre una dieta concreta
+    // y marca el comentario como no leído para notificar al alumno
     public function guardarComentario(Request $request, $dietaId)
     {
         $request->validate([

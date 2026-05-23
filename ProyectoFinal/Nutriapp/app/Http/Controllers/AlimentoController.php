@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AlimentoController extends Controller
 {
+    // Muestra la lista de alimentos del usuario autenticado
     public function mostrar()
     {
         if(!Auth::check()){
@@ -32,6 +33,7 @@ class AlimentoController extends Controller
         return view('alimentos.alimentos', compact('alimentos', 'comentariosNuevos', 'dietas'));
     }
 
+    // Muestra el formulario para crear un nuevo alimento
     public function create()
     {
         if(!Auth::check()){
@@ -51,6 +53,7 @@ class AlimentoController extends Controller
         return view('alimentos.create', compact('comentariosNuevos', 'dietas'));
     }
 
+    // Valida y guarda un nuevo alimento en la base de datos
     public function store(Request $request)
     {
         $request->validate([
@@ -83,6 +86,7 @@ class AlimentoController extends Controller
             ->with('success', '"' . $request->alimento . '" creado correctamente.');
     }
 
+    // Muestra el formulario de edición de un alimento existente
     public function edit(Alimento $alimento): View
     {
         $userId = Auth::id();
@@ -90,6 +94,7 @@ class AlimentoController extends Controller
         return view('alimentos.edit', compact('alimento'));
     }
 
+    // Actualiza los datos de un alimento existente en la base de datos
     public function update(Request $request, Alimento $alimento): RedirectResponse
     {
         try {
@@ -103,6 +108,7 @@ class AlimentoController extends Controller
         }
     }
 
+    // Elimina un alimento de la base de datos
     public function destroy(Alimento $alimento): RedirectResponse
     {
         try {

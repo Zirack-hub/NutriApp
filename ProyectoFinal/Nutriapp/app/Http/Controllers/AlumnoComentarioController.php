@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AlumnoComentarioController extends Controller
 {
+    // Muestra todos los comentarios de retroalimentación recibidos por el alumno autenticado,
+    // ordenando primero los no leídos y luego por fecha de actualización
     public function index()
     {
         if (!Auth::check()) {
@@ -24,6 +26,7 @@ class AlumnoComentarioController extends Controller
         return view('usuarios.comentarios', compact('dietasConComentarios'));
     }
 
+    // Marca un comentario de una dieta concreta como leído
     public function marcarVisto($id)
     {
         if (!Auth::check()) {

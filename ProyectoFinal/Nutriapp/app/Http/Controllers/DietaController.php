@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class DietaController extends Controller
 {
+    // Redirige a la primera dieta del usuario, o al formulario de creación si no tiene ninguna
     function mostrarDietas()
     {
         if(!Auth::check()){
@@ -28,6 +29,7 @@ class DietaController extends Controller
         return redirect()->route('dietas.show', $primeraDieta->id);
     }
 
+    // Muestra el formulario para crear una nueva dieta
     function createDieta()
     {
         $comentariosNuevos = Dieta::where('user_id', Auth::id())
@@ -39,6 +41,7 @@ class DietaController extends Controller
         return view('dietas.create', compact('comentariosNuevos'));
     }
 
+    // Valida y guarda una nueva dieta en la base de datos, luego redirige a la primera dieta del usuario
     function storeDieta(Request $request)
     {
         $request->validate([
@@ -60,6 +63,8 @@ class DietaController extends Controller
             ->with('success', 'Dieta "' . $request->nombre . '" creada correctamente.');
     }
 
+    // Muestra el detalle de una dieta concreta con todos sus alimentos agrupados por tipo de comida,
+    // cálculo de calorías totales, macronutrientes y porcentaje de objetivo alcanzado
     function mostrarDieta($id)
     {
         $dieta = Dieta::findOrFail($id);
@@ -101,6 +106,7 @@ class DietaController extends Controller
         ));
     }
 
+    // Actualiza el nombre y el objetivo calórico de una dieta existente
     public function updateDieta(Request $request, $id)
     {
         $request->validate([
@@ -117,6 +123,7 @@ class DietaController extends Controller
         return redirect()->back()->with('success', 'Dieta "' . $dieta->nombre . '" actualizada correctamente.');
     }
 
+    // Elimina una dieta junto con todos sus alimentos asociados y redirige a la siguiente dieta disponible
     public function destroyDieta($id)
     {
         $dieta = Dieta::findOrFail($id);
@@ -131,6 +138,7 @@ class DietaController extends Controller
             ->with('success', 'Dieta "' . $nombreDieta . '" eliminada correctamente.');
     }
 
+    // Añade un alimento a una dieta en un tipo de comida concreto (desayuno, comida, cena...)
     function agregarAlimento(Request $request, $id)
     {
         $request->validate([
@@ -158,6 +166,8 @@ class DietaController extends Controller
             ->with('success', '"' . $alimento->alimento . '" añadido al ' . $request->tipo_comida . ' correctamente.');
     }
 
+    // Actualiza un alimento de la dieta: si cambia el alimento, desvincula el anterior y adjunta el nuevo;
+    // si es el mismo, solo actualiza los pesos y medidas
     public function actualizarAlimento(Request $request, $dietaId)
     {
         $request->validate([
@@ -197,6 +207,7 @@ class DietaController extends Controller
             ->with('success', '"' . $alimentoNuevo->alimento . '" actualizado correctamente.');
     }
 
+    // Elimina un alimento concreto de un tipo de comida dentro de una dieta
     function eliminarAlimento(Request $request, $id)
     {
         $dieta = Dieta::findOrFail($id);
@@ -213,6 +224,7 @@ class DietaController extends Controller
             ->with('success', '"' . $nombreAlimento . '" eliminado del ' . $request->tipo_comida . ' correctamente.');
     }
 
+    // Guarda o actualiza la receta asociada a un tipo de comida dentro de una dieta
     public function agregarReceta(Request $request, $id)
     {
         $request->validate([
