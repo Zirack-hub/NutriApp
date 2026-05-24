@@ -9,7 +9,7 @@ html, body {
 }
 
 body {
-    background-image: url('../images/fondo_normal.png');
+    background-image: url('../images/fondo.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

@@ -7,19 +7,19 @@
         <div class="seccion-macros">
             <span class="macro-item macro-kcal">
                 <span class="macro-label">Kcal: </span>
-                <span class="macro-valor">{{ $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100 / 100) }}</span>
+                <span class="macro-valor">{{ round($alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100 / 100), 0) }}</span>
             </span>
             <span class="macro-item macro-prot">
                 <span class="macro-label">Prot: </span>
-                <span class="macro-valor">{{ $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->prot_100 / 100) }}</span>
+                <span class="macro-valor">{{ round($alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->prot_100 / 100), 2) }}g</span>
             </span>
             <span class="macro-item macro-grasa">
                 <span class="macro-label">Grasas: </span>
-                <span class="macro-valor">{{ $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->grasa_100 / 100) }}</span>
+                <span class="macro-valor">{{ round($alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->grasa_100 / 100), 2) }}g</span>
             </span>
             <span class="macro-item macro-hc">
                 <span class="macro-label">HC:</span>
-                <span class="macro-valor">{{ $alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100 / 100) }}</span>
+                <span class="macro-valor">{{ round($alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100 / 100), 2) }}g</span>
             </span>
             @php
                 $kcalTotal = round($alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100), 2);
@@ -27,10 +27,10 @@
             @endphp
             <span class="macro-item macro-pct">
                 <span class="macro-label">Energia: </span>
-                <span class="macro-valor">{{ $pct }}%</span>
+                <span class="macro-valor">{{ round($pct, 2) }}%</span>
             </span>
-        </div>
-        <span class="seccion-arrow">▾</span>
+    </div>
+    <span class="seccion-arrow">▾</span>
     </div>
     <div class="seccion-body" id="seccion-{{ $tipo }}">
         @if($alimentos->isNotEmpty())
