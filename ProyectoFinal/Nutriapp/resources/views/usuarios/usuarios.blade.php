@@ -44,7 +44,7 @@
                         @endif
                     </td>
                     <td>
-                        @if(auth()->user()->tipo != 3)
+                        @if(auth()->user()->tipo == 1)
                             <form method="POST" action="{{ route('usuarios.cambiar-password', $usuario->id) }}" class="form-tabla">
                                 @csrf
                                 <input type="password" name="password" placeholder="Nueva..." required>
@@ -53,7 +53,7 @@
                         @endif
                     </td>
                     <td>
-                        @if(auth()->user()->tipo != 3 && auth()->id() !== $usuario->id)
+                        @if(auth()->user()->tipo == 1 && auth()->id() !== $usuario->id)
                             <form method="POST" action="{{ route('usuarios.destroy', $usuario->id) }}" style="display:inline;" class="form-eliminar">
                                 @csrf
                                 @method('DELETE')
