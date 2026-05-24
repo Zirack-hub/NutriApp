@@ -58,7 +58,7 @@ class AlimentoController extends Controller
     {
         $request->validate([
             'alimento' => 'required',
-            'pc' => 'required|integer|min:1',
+            'pc' => 'required|numeric|min:0',
             'e_100' => 'required|numeric|min:0',
             'prot_100' => 'required|numeric|min:0',
             'grasa_100' => 'required|numeric|min:0',

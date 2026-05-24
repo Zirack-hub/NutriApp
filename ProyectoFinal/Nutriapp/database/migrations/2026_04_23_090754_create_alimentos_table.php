@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id');
             $table->foreignId('user_id')->constrained('usuarios')->cascadeOnDelete();
             $table->string('alimento', 255);
-            $table->unsignedInteger('pc');
+            $table->float('pc');
             $table->float('e_100',10,2);
             $table->float('prot_100',10,2);
             $table->float('grasa_100',10,2);

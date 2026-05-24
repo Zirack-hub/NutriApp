@@ -103,11 +103,11 @@
             </div>
             <div class="modal-editar-grupo">
                 <label>Peso bruto (g):</label>
-                <input type="number" name="peso_bruto" id="modal-input-bruto" class="form-input" min="0" required>
+                <input type="number" name="peso_bruto" id="modal-input-bruto" class="form-input" min="0" step="0.01" required>
             </div>
             <div class="modal-editar-grupo">
                 <label>Peso neto (g):</label>
-                <input type="number" name="peso_neto" id="modal-input-neto" class="form-input" min="0" required>
+                <input type="number" name="peso_neto" id="modal-input-neto" class="form-input" min="0" step="0.01" required>
             </div>
             <div class="modal-editar-grupo">
                 <label>Medidas caseras:</label>
