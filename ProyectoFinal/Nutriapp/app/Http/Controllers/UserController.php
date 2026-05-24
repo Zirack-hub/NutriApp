@@ -56,7 +56,7 @@ class UserController extends Controller
 
         if (Auth::user()->tipo == 3) {
             abort(403);
-        }
+        }   
 
         $request->validate([
             'nombre' => 'required',
@@ -70,7 +70,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'tipo' => $request->tipo,
-            'must_change_password' => $request->tipo == 3 ? true : false,
+            'must_change_password' => $request->tipo != 1 ? true : false,
         ]);
 
         return redirect()->route('usuarios')
