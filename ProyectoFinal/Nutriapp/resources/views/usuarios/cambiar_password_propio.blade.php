@@ -1,4 +1,4 @@
-@extends('layouts.formulario')
+@extends('layouts.default')
 @section('title', 'Cambiar contraseña')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/usuarios.css') }}">

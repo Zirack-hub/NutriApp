@@ -27,27 +27,29 @@
     <div class="card">
         <h3 style="color:#4e6b4e; margin-bottom:0.5rem;">{{ $dieta->nombre }}</h3>
         <p>🎯 Objetivo calórico: <strong>{{ $dieta->objetivo }} kcal</strong></p>
-        <p>📊 Porcentaje alcanzado: <strong>{{ $porcentajeAlcanzado }} %</strong></p>
+        <p>📊 Porcentaje alcanzado: <strong>{{ round($porcentajeAlcanzado, 2) }} %</strong></p>
         <p>📊 Creado en: <strong>{{ $dieta->created_at }}</strong></p>
         <p>📊 Actualizado en: <strong>{{ $dieta->updated_at }}</strong></p>
-
         @php
             $alimentosTotales = collect($alimentos_por_comida)->flatten();
-            $kcalTotal  = $alimentosTotales->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100   / 100);
-            $protTotal  = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->prot_100  / 100);
-            $grasaTotal = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->grasa_100 / 100);
-            $hcTotal    = $dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100    / 100);
-            $pctProt = $kcalTotal > 0 ? round($protTotal * 4 / $kcalTotal, 2) : 0;
-            $pctGrasa    = $kcalTotal > 0 ? round($grasaTotal * 9 / $kcalTotal, 2) : 0;
-            $pctHC        = $kcalTotal > 0 ? round($hcTotal    * 4 / $kcalTotal, 2) : 0;
-            $pctMacros    = round($pctProt + $pctGrasa + $pctHC, 2);
+            
+            $kcalTotal  = round($alimentosTotales->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->e_100   / 100), 2);
+            $protTotal  = round($dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->prot_100  / 100), 2);
+            $grasaTotal = round($dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->grasa_100 / 100), 2);
+            $hcTotal    = round($dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100    / 100), 2);
+            
+            $pctProt   = $kcalTotal > 0 ? round((($protTotal * 4 / $kcalTotal) * 100) /100, 2) : 0;
+            $pctGrasa  = $kcalTotal > 0 ? round((($grasaTotal * 9 / $kcalTotal) * 100) /100, 2) : 0;
+            $pctHC     = $kcalTotal > 0 ? round((($hcTotal    * 4 / $kcalTotal) * 100) /100, 2) : 0;
+            
+            $pctMacros = round($pctProt + $pctGrasa + $pctHC, 2);
         @endphp
         <div style="margin-top:1rem;">
             <p style="font-weight:600; color:#4e6b4e; margin-bottom:0.5rem;">📊 Distribución de macronutrientes</p>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <span class="macro-pill macro-prot">Proteínas: <strong>{{ round($protTotal, 1) }}g</strong> · <strong>{{ $pctProt }}%</strong></span>
-                <span class="macro-pill macro-grasa">Grasas: <strong>{{ round($grasaTotal, 1) }}g</strong> · <strong>{{ $pctGrasa }}%</strong></span>
-                <span class="macro-pill macro-hc">Hidratos: <strong>{{ round($hcTotal, 1) }}g</strong> · <strong>{{ $pctHC }}%</strong></span>
+                <span class="macro-pill macro-prot">Proteínas: <strong>{{ round($protTotal, 2) }}g</strong> · <strong>{{ $pctProt }}%</strong></span>
+                <span class="macro-pill macro-grasa">Grasas: <strong>{{ round($grasaTotal, 2) }}g</strong> · <strong>{{ $pctGrasa }}%</strong></span>
+                <span class="macro-pill macro-hc">Hidratos: <strong>{{ round($hcTotal, 2) }}g</strong> · <strong>{{ $pctHC }}%</strong></span>
                 <span class="macro-pill macro-pct">% Macros: <strong>{{ $pctMacros }}%</strong></span>
             </div>
         </div>
@@ -100,11 +102,11 @@
             </div>
 
             <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1rem;">
-                <span class="macro-pill macro-kcal">Kcal: <strong>{{ round($kcalSeccion, 1) }}</strong></span>
-                <span class="macro-pill macro-prot">Prot: <strong>{{ round($protSeccion, 1) }}g</strong></span>
-                <span class="macro-pill macro-grasa">Grasas: <strong>{{ round($grasaSeccion, 1) }}g</strong></span>
-                <span class="macro-pill macro-hc">HC: <strong>{{ round($hcSeccion, 1) }}g</strong></span>
-                <span class="macro-pill macro-pct">Energía: <strong>{{ $pct }}%</strong></span>
+                <span class="macro-pill macro-kcal">Kcal: <strong>{{ round($kcalSeccion, 2) }}</strong></span>
+                <span class="macro-pill macro-prot">Prot: <strong>{{ round($protSeccion, 2) }}g</strong></span>
+                <span class="macro-pill macro-grasa">Grasas: <strong>{{ round($grasaSeccion, 2) }}g</strong></span>
+                <span class="macro-pill macro-hc">HC: <strong>{{ round($hcSeccion, 2) }}g</strong></span>
+                <span class="macro-pill macro-pct">Energía: <strong>{{ round($pct, 2) }}%</strong></span>
             </div>
 
             @if($alimentos->isNotEmpty())
@@ -128,10 +130,10 @@
                                 <td>{{ $alimento->pivot->peso_bruto }}</td>
                                 <td>{{ $alimento->pivot->peso_neto }}</td>
                                 <td>{{ $alimento->pivot->medidas_caseras ?? '-' }}</td>
-                                <td>{{ round($alimento->pivot->peso_bruto * $alimento->pc * $alimento->e_100 / 100, 1) }}</td>
-                                <td>{{ round($alimento->pivot->peso_bruto * $alimento->pc * $alimento->prot_100 / 100, 1) }}</td>
-                                <td>{{ round($alimento->pivot->peso_bruto * $alimento->pc * $alimento->grasa_100 / 100, 1) }}</td>
-                                <td>{{ round($alimento->pivot->peso_bruto * $alimento->pc * $alimento->hc_100 / 100, 1) }}</td>
+                                <td>{{ round($alimento->pivot->peso_bruto * $alimento->pc * $alimento->e_100 / 100, 2) }}</td>
+                                <td>{{ round($alimento->pivot->peso_bruto * $alimento->pc * $alimento->prot_100 / 100, 2) }}</td>
+                                <td>{{ round($alimento->pivot->peso_bruto * $alimento->pc * $alimento->grasa_100 / 100, 2) }}</td>
+                                <td>{{ round($alimento->pivot->peso_bruto * $alimento->pc * $alimento->hc_100 / 100, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
