@@ -130,8 +130,8 @@
                     @endforeach
                 </select>
                 <div class="form-grid">
-                    <input type="number" name="peso_bruto" class="form-input" placeholder="Peso bruto (g)" min="0" required>
-                    <input type="number" name="peso_neto" class="form-input" placeholder="Peso neto (g)" min="0" required>
+                   <input type="number" name="peso_bruto" class="form-input" placeholder="Peso bruto (g)" min="0" step="0.01" required>
+                    <input type="number" name="peso_neto" class="form-input" placeholder="Peso neto (g)" min="0" step="0.01" required>
                     <input type="text" name="medidas_caseras" class="form-input" placeholder="Medidas caseras (opcional)">
                     <button type="submit" class="btn">+ Añadir</button>
                 </div>
