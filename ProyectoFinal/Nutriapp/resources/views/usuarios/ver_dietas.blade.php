@@ -38,9 +38,9 @@
             $grasaTotal = round($dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->grasa_100 / 100), 2);
             $hcTotal    = round($dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100    / 100), 2);
             
-            $pctProt   = $kcalTotal > 0 ? round((($protTotal * 4 / $kcalTotal) * 100) /100, 2) : 0;
-            $pctGrasa  = $kcalTotal > 0 ? round((($grasaTotal * 9 / $kcalTotal) * 100) /100, 2) : 0;
-            $pctHC     = $kcalTotal > 0 ? round((($hcTotal    * 4 / $kcalTotal) * 100) /100, 2) : 0;
+            $pctProt   = $kcalTotal > 0 ? round((($protTotal * 4 / $kcalTotal) * 100) , 2) : 0;
+            $pctGrasa  = $kcalTotal > 0 ? round((($grasaTotal * 9 / $kcalTotal) * 100) , 2) : 0;
+            $pctHC     = $kcalTotal > 0 ? round((($hcTotal    * 4 / $kcalTotal) * 100) , 2) : 0;
             
             $pctMacros = round($pctProt + $pctGrasa + $pctHC, 2);
         @endphp
