@@ -82,9 +82,9 @@ class DietaController extends Controller
         $porcentajeAlcanzado = round($kcalTotalDia / $dieta->objetivo, 2);
         $comidas = Comida::where('dieta_id', $id)->get()->keyBy('comida');
 
-        $protTotalDia  = round($dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->prot_100  / 100), 2);
-        $grasaTotalDia = round($dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->grasa_100 / 100), 2);
-        $hcTotalDia    = round($dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100    / 100), 2);
+        $protTotalDia  = round($dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->prot_100  ), 2);
+        $grasaTotalDia = round($dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->grasa_100 ), 2);
+        $hcTotalDia    = round($dieta->alimentos->sum(fn($a) => $a->pivot->peso_bruto * $a->pc * $a->hc_100    ), 2);
 
         $pctProteinas = $kcalTotalDia > 0 ? round($protTotalDia  * 4 / $kcalTotalDia * 100, 2) : 0;
         $pctGrasas    = $kcalTotalDia > 0 ? round($grasaTotalDia * 9 / $kcalTotalDia * 100, 2) : 0;
